@@ -1,0 +1,207 @@
+I"�?<ul>
+  <li>8주차 과제 - 서브쿼리</li>
+  <li>실습 환경 : Oracle</li>
+  <li>
+    <p>해결 날짜 : 2021-04-26</p>
+  </li>
+  <li>과제
+    <ul>
+      <li>
+        <p>8-1. 슬라이드 301페이지에 있는 질의문을 참고하여 EMP 테이블에서 단일행 서브쿼리를 포함하는 SQL문을 한글 질의문과 함께 작성하라. [1점]</p>
+
+        <ul>
+          <li>
+            <p>한글 질의문 : EMP 테이블에서 이름이 ‘ALLEN’인 사원의 월급 이상의 월급을 갖고 있는 사원들을 이름 순으로(오름차순) 정렬해 사원명, 역할, 월급을 출력하여라.</p>
+          </li>
+          <li>
+            <p>SQL문 :</p>
+          </li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">ENAME</span> <span class="err">사원명</span><span class="p">,</span> <span class="n">JOB</span> <span class="err">역할</span><span class="p">,</span> <span class="n">SAL</span> <span class="err">월급</span>
+  <span class="k">FROM</span> <span class="n">EMP</span>
+  <span class="k">WHERE</span> <span class="n">SAL</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">SAL</span>
+                  <span class="k">FROM</span> <span class="n">EMP</span>
+                  <span class="k">WHERE</span> <span class="n">ENAME</span> <span class="o">=</span> <span class="s1">'ALLEN'</span><span class="p">)</span>
+  <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">ENAME</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/116090030-69a05d80-a6de-11eb-80a6-e194588e0b57.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>8-2. [예제3]을 참고하여 다중칼럼 서브쿼리를 사용해서 EMP, DEPT 테이블을 대상으로 부서별로 가장 최근에 입사한 사원의 사원번호, 사원이름, 입사일자 및 부서이름을 출력하는 SQL문을 작성하라. [2점]</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">E</span><span class="p">.</span><span class="n">EMPNO</span> <span class="err">사원번호</span><span class="p">,</span> <span class="n">E</span><span class="p">.</span><span class="n">ENAME</span> <span class="err">사원이름</span><span class="p">,</span> <span class="n">E</span><span class="p">.</span><span class="n">HIREDATE</span> <span class="err">입사일자</span><span class="p">,</span> <span class="n">D</span><span class="p">.</span><span class="n">DNAME</span> <span class="err">부서이름</span>
+  <span class="k">FROM</span> <span class="n">EMP</span> <span class="n">E</span><span class="p">,</span> <span class="n">DEPT</span> <span class="n">D</span>
+  <span class="k">WHERE</span> <span class="n">D</span><span class="p">.</span><span class="n">DEPTNO</span> <span class="o">=</span> <span class="n">E</span><span class="p">.</span><span class="n">DEPTNO</span>
+  <span class="k">AND</span> <span class="p">(</span><span class="n">D</span><span class="p">.</span><span class="n">DEPTNO</span><span class="p">,</span> <span class="n">E</span><span class="p">.</span><span class="n">HIREDATE</span><span class="p">)</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">E2</span><span class="p">.</span><span class="n">DEPTNO</span><span class="p">,</span> <span class="k">MAX</span><span class="p">(</span><span class="n">HIREDATE</span><span class="p">)</span>
+                                  <span class="k">FROM</span> <span class="n">EMP</span> <span class="n">E2</span>
+                                  <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">E2</span><span class="p">.</span><span class="n">DEPTNO</span><span class="p">)</span>
+  <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">D</span><span class="p">.</span><span class="n">DEPTNO</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/116090131-82a90e80-a6de-11eb-9acd-2c71894abb82.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>8-3. [예제4]를 참고하여 EMP 테이블을 대상으로 연관 서브쿼리를 포함하는 SQL문을 한글 질의문과 함께 작성하라. [2점]</p>
+
+        <ul>
+          <li>
+            <p>한글 질의문 : EMP, DEPT 테이블에서 부서 번호가 같고 부서 별 평균 월급 보다 많은 월급을 받고 있는 사원들을 부서 번호(오름차순)로 정렬하여 사원번호, 사원이름, 월급, 부서이름을 출력하여라.(단, 연관 서브쿼리를 사용하여라)</p>
+          </li>
+          <li>
+            <p>SQL문 :</p>
+          </li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">E</span><span class="p">.</span><span class="n">EMPNO</span> <span class="err">사원번호</span><span class="p">,</span> <span class="n">E</span><span class="p">.</span><span class="n">ENAME</span> <span class="err">사원이름</span><span class="p">,</span> <span class="n">E</span><span class="p">.</span><span class="n">SAL</span> <span class="err">월급</span><span class="p">,</span> <span class="n">D</span><span class="p">.</span><span class="n">DNAME</span> <span class="err">부서이름</span>
+  <span class="k">FROM</span> <span class="n">EMP</span> <span class="n">E</span><span class="p">,</span> <span class="n">DEPT</span> <span class="n">D</span>
+  <span class="k">WHERE</span> <span class="n">E</span><span class="p">.</span><span class="n">DEPTNO</span> <span class="o">=</span> <span class="n">D</span><span class="p">.</span><span class="n">DEPTNO</span>
+  <span class="k">AND</span> <span class="n">E</span><span class="p">.</span><span class="n">SAL</span> <span class="o">&gt;</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">AVG</span><span class="p">(</span><span class="n">E2</span><span class="p">.</span><span class="n">SAL</span><span class="p">)</span>
+              <span class="k">FROM</span> <span class="n">EMP</span> <span class="n">E2</span>
+              <span class="k">WHERE</span> <span class="n">E2</span><span class="p">.</span><span class="n">DEPTNO</span> <span class="o">=</span> <span class="n">D</span><span class="p">.</span><span class="n">DEPTNO</span>
+              <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">E2</span><span class="p">.</span><span class="n">DEPTNO</span><span class="p">)</span>
+  <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">D</span><span class="p">.</span><span class="n">DEPTNO</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/116090223-994f6580-a6de-11eb-96fb-9a1b285195b7.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/116090260-a0767380-a6de-11eb-87d0-062e202dba02.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>8-4. [예제9]~[예제12]를 참고하여 PLAYER, TEAM 테이블을 대상으로 90년 이후에 출생한 선수들에 대한 INLINE VIEW를 정의하고, 이로부터 각 팀별로 팀 이름, 포지션별 평균키를 출력하는 SQL문을 작성하라. (단, 평균키는 소수점 첫째 자리까지 표시하고 팀 이름을 기준으로 오름차순으로 정렬하여 출력하라.) [2점]</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">T</span><span class="p">.</span><span class="n">TEAM_ID</span> <span class="nv">"팀 이름"</span><span class="p">,</span> <span class="n">P</span><span class="p">.</span><span class="k">POSITION</span> <span class="err">포지션</span><span class="p">,</span> <span class="n">P</span><span class="p">.</span><span class="n">AVG_HEIGHT</span> <span class="nv">"포지션별 평균 키"</span>
+  <span class="k">FROM</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">TEAM_ID</span><span class="p">,</span> <span class="k">POSITION</span><span class="p">,</span> <span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">HEIGHT</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="n">AVG_HEIGHT</span>
+      <span class="k">FROM</span> <span class="n">PLAYER</span>
+      <span class="k">WHERE</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="nb">YEAR</span> <span class="k">FROM</span> <span class="n">BIRTH_DATE</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1990</span>
+      <span class="k">GROUP</span> <span class="k">BY</span> <span class="k">POSITION</span><span class="p">,</span> <span class="n">TEAM_ID</span><span class="p">)</span> <span class="n">P</span><span class="p">,</span> <span class="n">TEAM</span> <span class="n">T</span>
+  <span class="k">WHERE</span> <span class="n">T</span><span class="p">.</span><span class="n">TEAM_ID</span> <span class="o">=</span> <span class="n">P</span><span class="p">.</span><span class="n">TEAM_ID</span>
+  <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">T</span><span class="p">.</span><span class="n">TEAM_ID</span><span class="p">;</span> 
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/116090341-ba17bb00-a6de-11eb-8729-ec44e32caebe.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>8-5. 슬라이드 315페이지에 있는 질의문을 참고하여 EMP 테이블과 DEPT 테이블을 조인하는 뷰를 생성하고 [예제13]과 같이 생성된 뷰를 사용하여 데이터를 조회하는 SQL문을 한글 질의문과 함께 작성하라. [2점]</p>
+
+        <ul>
+          <li>
+            <p>한글 질의문 : EMP, DEPT 테이블을 레프트 조인하여 뷰를 생성하고, 생성된 뷰에서 사원명, 역할, 월급, 부서번호, 부서명을 출력하되 역할을 기준으로 오름차순으로 정렬하여 월급이 1500 이상인 사원을 출력하여라.</p>
+          </li>
+          <li>
+            <p>SQL문 :</p>
+          </li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre>  <span class="k">CREATE</span> <span class="k">VIEW</span> <span class="n">V_EMP_DEPT</span> <span class="k">AS</span>
+  <span class="k">SELECT</span> <span class="n">P</span><span class="p">.</span><span class="n">ENAME</span> <span class="err">사원명</span><span class="p">,</span> <span class="n">P</span><span class="p">.</span><span class="n">JOB</span> <span class="err">역할</span><span class="p">,</span> <span class="n">P</span><span class="p">.</span><span class="n">SAL</span> <span class="err">월급</span><span class="p">,</span> <span class="n">D</span><span class="p">.</span><span class="n">DEPTNO</span> <span class="err">부서번호</span><span class="p">,</span> <span class="n">D</span><span class="p">.</span><span class="n">DNAME</span> <span class="err">부서명</span>
+  <span class="k">FROM</span> <span class="n">EMP</span> <span class="n">P</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="n">DEPT</span> <span class="n">D</span> 
+          <span class="k">ON</span> <span class="n">P</span><span class="p">.</span><span class="n">DEPTNO</span> <span class="o">=</span> <span class="n">D</span><span class="p">.</span><span class="n">DEPTNO</span><span class="p">;</span>
+
+  <span class="k">SELECT</span> <span class="err">사원명</span><span class="p">,</span> <span class="err">역할</span><span class="p">,</span> <span class="err">월급</span><span class="p">,</span> <span class="err">부서번호</span><span class="p">,</span> <span class="err">부서명</span>
+  <span class="k">FROM</span> <span class="n">V_EMP_DEPT</span>
+  <span class="k">WHERE</span> <span class="err">월급</span> <span class="o">&gt;=</span> <span class="mi">1500</span>
+  <span class="k">ORDER</span> <span class="k">BY</span> <span class="err">역할</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/116090415-cdc32180-a6de-11eb-969e-cfd5d591c3e9.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/116090437-d4519900-a6de-11eb-91cb-c6f2d3d89c22.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>8-6. 슬라이드 320페이지에 있는 질의문을 참고하여 Select List 항목으로 위치하는 스칼라 서브쿼리를 포함하는 SQL문을 한글 질의문과 함께 작성하라. [1점]</p>
+
+        <ul>
+          <li>
+            <p>한글 질의문 : PLAYER 테이블에서 TEAM 테이블을 스칼라 서브쿼리로 사용하여 TEAM 테이블에서 팀명을, PLAYER 테이블에서 선수번호, 선수명, 포지션을 출력하되, 포지션이 골키퍼인 선수들만 출력하여라.</p>
+          </li>
+          <li>
+            <p>SQL문 :</p>
+          </li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">PLAYER_ID</span> <span class="err">선수번호</span><span class="p">,</span> <span class="n">PLAYER_NAME</span> <span class="err">선수명</span><span class="p">,</span> <span class="k">POSITION</span> <span class="err">포지션</span><span class="p">,</span>
+      <span class="p">(</span><span class="k">SELECT</span> <span class="n">TEAM_NAME</span> <span class="k">FROM</span> <span class="n">TEAM</span> <span class="k">WHERE</span> <span class="n">TEAM_ID</span> <span class="o">=</span> <span class="n">P</span><span class="p">.</span><span class="n">TEAM_ID</span><span class="p">)</span> <span class="err">팀명</span>
+  <span class="k">FROM</span> <span class="n">PLAYER</span> <span class="n">P</span>
+  <span class="k">WHERE</span> <span class="k">POSITION</span> <span class="o">=</span> <span class="s1">'GK'</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/116090494-e7646900-a6de-11eb-8494-53811644d479.png" alt="image" /></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+:ET

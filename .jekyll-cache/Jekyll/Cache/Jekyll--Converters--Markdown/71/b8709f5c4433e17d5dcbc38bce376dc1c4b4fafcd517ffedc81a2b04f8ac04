@@ -1,0 +1,192 @@
+I"3<h2 id="오늘의-계획">오늘의 계획</h2>
+<ul>
+  <li>
+    <p>대표적인 관계형 DB인 MYSQL 강의 듣기</p>
+
+    <ul>
+      <li>섹션 4 - MySQL CRUD</li>
+    </ul>
+  </li>
+  <li>
+    <p>분할정복 알고리즘 공부 및 문제 풀이</p>
+
+    <ul>
+      <li>백준 문제 풀이</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+<h2 id="오늘의-회고">오늘의 회고</h2>
+
+<p><img src="https://user-images.githubusercontent.com/34560965/105991248-e5dad300-60e6-11eb-89f6-00bbc3ec49ef.png" alt="image" /></p>
+<ul>
+  <li>
+    <p>인프런 DataBase 강의 수강</p>
+
+    <p><img src="https://user-images.githubusercontent.com/34560965/105986440-4b779100-60e0-11eb-91b4-a7793d99508a.png" alt="image" /></p>
+    <ul>
+      <li>topic table의 description : DESC topic;</li>
+    </ul>
+
+    <p><img src="https://user-images.githubusercontent.com/34560965/105986460-52060880-60e0-11eb-8b25-6d6b34368d88.png" alt="image" /></p>
+    <ul>
+      <li>create row : INSERT INTO topic () VALUES();</li>
+    </ul>
+
+    <p><img src="https://user-images.githubusercontent.com/34560965/105986750-ad37fb00-60e0-11eb-8245-a4256545fd0e.png" alt="image" /></p>
+    <ul>
+      <li>read row (topic table로부터 모든 정보를 가져와 선택) : SELECT * FROM topic;</li>
+    </ul>
+
+    <p><img src="https://user-images.githubusercontent.com/34560965/105987198-4c5cf280-60e1-11eb-8dd8-b0c2241c85a7.png" alt="image" /></p>
+    <ul>
+      <li>5개의 행을 create 한 뒤 read한 모습</li>
+    </ul>
+
+    <p><img src="https://user-images.githubusercontent.com/34560965/105987826-2ab03b00-60e2-11eb-9e34-9b7649f772f1.png" alt="image" /></p>
+    <ul>
+      <li>테이블에서 표시하고 싶은 열만 표시</li>
+    </ul>
+
+    <p><img src="https://user-images.githubusercontent.com/34560965/105988279-bf1a9d80-60e2-11eb-9b4d-90191268678f.png" alt="image" /></p>
+    <ul>
+      <li>author의 이름이 egoing인 것만 표시</li>
+    </ul>
+
+    <p><img src="https://user-images.githubusercontent.com/34560965/105988449-f8eba400-60e2-11eb-82a4-db406f5cbc47.png" alt="image" /></p>
+    <ul>
+      <li>내림차순으로 정렬</li>
+    </ul>
+
+    <p><img src="https://user-images.githubusercontent.com/34560965/105988550-27697f00-60e3-11eb-912d-e436638ed7f8.png" alt="image" /></p>
+    <ul>
+      <li>2개만 표시</li>
+    </ul>
+
+    <p><img src="https://user-images.githubusercontent.com/34560965/105990820-5cc39c00-60e6-11eb-9045-c4cbebd3e312.png" alt="image" /></p>
+    <ul>
+      <li>UPDATE : id가 2인 행의 description과 title을 각각의 값으로 수정</li>
+    </ul>
+
+    <p><img src="https://user-images.githubusercontent.com/34560965/105991123-c348ba00-60e6-11eb-8a96-1aeb658bb0b2.png" alt="image" /></p>
+    <ul>
+      <li>DELETE : id가 5인 행을 삭제</li>
+    </ul>
+  </li>
+  <li>
+    <p>분할정복 알고리즘 문제 : 백준 SILVER 2(종이의 개수)</p>
+    <ul>
+      <li>분할정복 알고리즘 : 분할 정복 알고리즘은 그대로 해결할 수 없는 문제를 작은 문제로 분할하여 해결하는 방법이나 알고리즘을 의미한다. 보통 재귀 함수를 통해 구현된다.</li>
+    </ul>
+
+    <p><img src="https://user-images.githubusercontent.com/34560965/106001026-d19cd300-60f2-11eb-85ca-0fd4bf1b88a7.png" alt="image" /></p>
+    <ul>
+      <li>
+        <p>해결 방법 :</p>
+
+        <ul>
+          <li>우선 현재 종이의 위치를 x,y로 나타내고 종이의 크기를 n으로 나타내었다.</li>
+          <li>paper 2차원 배열을 만들어 입력 받은 N으로 N*N 크기의 벡터를 만들었고, paper_count 배열을 만들어 0번째 인덱스에는 -1, 1번째 인덱스에는 0, 2번째 인덱스에는 1로 이루어진 종이의 개수를 세어 저장하였다.</li>
+          <li>기본적으로 0,0의 인덱스부터 시작해 재귀함수를 통해 구현하였고, check 함수를 통해 현재 확인하고자 하는 크기의 종이에서  다른 수로 되어 있는 종이가 있는지 체크하여 같다면 return으로 돌아가고, 다른 경우에는 9분할하여 다시 재귀하는 방식을 통해 문제를 해결하였다.</li>
+        </ul>
+      </li>
+      <li>
+        <p>코드</p>
+
+        <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+</pre></td><td class="rouge-code"><pre>  <span class="cp">#include &lt;iostream&gt;
+</span>  <span class="cp">#include &lt;vector&gt;
+</span>
+  <span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+  <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">paper</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">paper_count</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+
+  <span class="c1">//종이가 모두 같은 수로 되어 있는지 체크하는 함수</span>
+  <span class="kt">bool</span> <span class="nf">check</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//n = 현재 크기</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">y</span> <span class="o">+</span> <span class="n">n</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+              <span class="k">if</span> <span class="p">(</span><span class="n">paper</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">!=</span> <span class="n">paper</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">//다른 수로 되어 있는 종이가 있다면 false 반환</span>
+          <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="nf">solution</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">//paper_count[0] == -1 , paper_count[1] == 0 , paper_count[2] == 1</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">check</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span> <span class="p">{</span> <span class="c1">//같은 경우</span>
+          <span class="n">paper_count</span><span class="p">[</span><span class="n">paper</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+          <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="c1">//다른 경우 9분할하여 재귀</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+              <span class="n">solution</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">/</span> <span class="mi">3</span><span class="p">),</span> <span class="n">y</span> <span class="o">+</span> <span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">/</span> <span class="mi">3</span><span class="p">),</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">3</span><span class="p">);</span>
+          <span class="p">}</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kt">int</span> <span class="n">N</span><span class="p">;</span> 
+      <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">N</span><span class="p">;</span>
+      <span class="n">paper</span> <span class="o">=</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span> <span class="c1">//입력받은 N만큼 N*N을 0으로 초기화</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+              <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">paper</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span>
+          <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="n">solution</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+          <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">paper_count</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

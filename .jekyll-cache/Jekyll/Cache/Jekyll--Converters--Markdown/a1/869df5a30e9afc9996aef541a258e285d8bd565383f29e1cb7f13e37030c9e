@@ -1,0 +1,140 @@
+I"�*<ul>
+  <li>
+    <p>7주차 과제 : SVM</p>
+
+    <p><img src="https://user-images.githubusercontent.com/34560965/140646570-6f8275f0-90e7-46f8-b3ed-35bd1b69fb07.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/140646573-8869af06-72bf-49db-abb3-8c08032c6e54.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/140646576-926df7ba-da4c-48de-94f0-be03571526a9.png" alt="image" /></p>
+
+    <ul>
+      <li>사용 언어 : python</li>
+      <li>해결 날짜 : 2021-11-07</li>
+      <li>
+        <p>코드 설명 :</p>
+
+        <ul>
+          <li>Mnist data를 Sklearn 라이브러리를 이용하여 가져오고, 이 값은 총 7만개지만 train 데이터와 test 데이터가 섞여 있으므로 train_test_split을 사용하여 6:1로 나누어 주었다.</li>
+          <li>처음에 스케일링을 하지 않고 c값만 변화시켜 정확도를 측정했더니 최대치가 0.85로 매우 낮았다. 성능을 높이기 위하여, 데이터 스케일링이 필요하다고 생각되어 QuantileTransformer 스케일러를 사용하여 데이터를 균등분포 시켰다.</li>
+          <li>그 다음 최대 성능을 내는 C값을 찾기 위해 반복문을 사용하여 우선 0부터 10까지 1씩 늘려가며 (단 C는 양수여야 하기 때문에 0일 때는 0.1로 하였다.) 최적의 C값을 찾았고, 가장 클 때는 0.1이었다. 그 다음 최대일 때는 2로 그 차이가 미미하다고 생각되었기 때문에 C값을 0.1부터 2.9까지 0.1씩 늘려가며 다시 최적의 C값을 찾았다.</li>
+          <li>이 때 훈련 및 성능 측정 모델로 SVC가 아닌 LinearSVC를 사용했는데, SVC를 사용하려니 몇시간 동안 훈련이 되지 않아 진행이 되지 않아서 어쩔 수 없이 LinearSVC를 사용했다.</li>
+          <li>최적의 C값인 1.7로 성능을 측정한 결과 0.882의 정확도를 얻을 수 있었다. 아마 LInearSVC가 아닌 그냥 SVC를 사용했다면 더 높은 결과를 얻었을 수도 있을 것 같다.</li>
+        </ul>
+      </li>
+      <li>
+        <p>결과 : 
+  <img src="https://user-images.githubusercontent.com/34560965/140646579-66d56113-2585-4a9d-af46-35dc92d331dd.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/140646584-3b288a9d-dc63-4120-ad6d-ab8ff807a932.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/140646588-0133b184-0d9b-4563-9d71-b7bcdf1ed931.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/140646590-adbedefe-ab7f-42b7-ae30-f0fa37c8eb21.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/140646594-61fd5fe6-16f6-4f5a-a04b-3391f4165f1f.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/140646602-57953dc1-d780-4eb8-8a79-9e5cc0c31dc2.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>코드</p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+</pre></td> --><td class="rouge-code"><pre>  <span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_openml</span>
+  <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+  <span class="n">mnist</span> <span class="o">=</span> <span class="n">fetch_openml</span><span class="p">(</span><span class="s">'mnist_784'</span><span class="p">)</span>
+
+  <span class="n">train_input</span><span class="p">,</span> <span class="n">test_input</span><span class="p">,</span> <span class="n">train_target</span><span class="p">,</span> <span class="n">test_target</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">mnist</span><span class="p">[</span><span class="s">'data'</span><span class="p">],</span>
+                                                                      <span class="n">mnist</span><span class="p">[</span><span class="s">'target'</span><span class="p">],</span>
+                                                                      <span class="n">test_size</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">7</span><span class="p">),</span>
+                                                                      <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">train_input</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+
+
+  <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">QuantileTransformer</span>
+
+  <span class="n">scaler</span> <span class="o">=</span> <span class="n">QuantileTransformer</span><span class="p">()</span>
+  <span class="n">scaler</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_input</span><span class="p">)</span>
+  <span class="n">train_input_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">train_input</span><span class="p">)</span>
+  <span class="n">test_input_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test_input</span><span class="p">)</span>
+
+
+  <span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">LinearSVC</span>
+
+  <span class="n">c_max</span> <span class="o">=</span> <span class="mf">0.1</span>
+  <span class="n">model</span> <span class="o">=</span> <span class="n">LinearSVC</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="n">c_max</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_input_scaled</span><span class="p">,</span> <span class="n">train_target</span><span class="p">)</span>
+  <span class="n">score_max</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">test_input_scaled</span><span class="p">,</span> <span class="n">test_target</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">score_max</span><span class="p">)</span>
+
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
+      <span class="n">model</span> <span class="o">=</span> <span class="n">LinearSVC</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+      <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_input_scaled</span><span class="p">,</span> <span class="n">train_target</span><span class="p">)</span>
+      <span class="n">temp_score</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">test_input_scaled</span><span class="p">,</span> <span class="n">test_target</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">score_max</span> <span class="o">&lt;</span> <span class="n">temp_score</span><span class="p">:</span>
+          <span class="n">score_max</span> <span class="o">=</span> <span class="n">temp_score</span>
+          <span class="n">c_max</span> <span class="o">=</span> <span class="n">i</span>
+      <span class="k">print</span><span class="p">(</span><span class="n">temp_score</span><span class="p">)</span>
+
+
+  <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+  <span class="n">li</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">li</span><span class="p">:</span>
+      <span class="n">model</span> <span class="o">=</span> <span class="n">LinearSVC</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+      <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_input_scaled</span><span class="p">,</span> <span class="n">train_target</span><span class="p">)</span>
+      <span class="n">temp_score</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">test_input_scaled</span><span class="p">,</span> <span class="n">test_target</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">score_max</span> <span class="o">&lt;</span> <span class="n">temp_score</span><span class="p">:</span>
+          <span class="n">score_max</span> <span class="o">=</span> <span class="n">temp_score</span>
+          <span class="n">c_max</span> <span class="o">=</span> <span class="n">i</span>
+
+
+  <span class="k">print</span><span class="p">(</span><span class="s">"C값이 {c}일 때 Accuracy : {score}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">c</span><span class="o">=</span><span class="nb">round</span><span class="p">(</span><span class="n">c_max</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">score</span><span class="o">=</span><span class="n">score_max</span><span class="p">))</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

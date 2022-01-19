@@ -1,0 +1,93 @@
+I"�<ul>
+  <li>
+    <p>1주차 과제</p>
+
+    <p><img src="https://user-images.githubusercontent.com/34560965/136653213-1fecefcc-ed9d-4731-ac9b-e2a99399ebd0.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/136653261-43630304-ee1b-4930-b4ac-3b0dae3e18f3.png" alt="image" /></p>
+
+    <ul>
+      <li>사용 언어 : python</li>
+      <li>
+        <p>해결 날짜 : 2021-09-12</p>
+      </li>
+      <li>
+        <p>코드 설명 :</p>
+
+        <p>1)</p>
+        <ul>
+          <li>input 함수를 통해 사용자로부터 n 값을 입력받고, 1부터 n까지 짝수들의 합을 저장할 sum 변수를 선언해 초기화한다.</li>
+          <li>while문으로 n이 0보다 큰 동안 1씩 감소시키며 % 연산자로 짝수인 경우에만 sum 변수에 n 값을 더한다.</li>
+        </ul>
+
+        <p>2)</p>
+        <ul>
+          <li>딕셔너리 자료형을 이용해 student 변수에 과목:성적 쌍을 저장하였고, 각 성적을 키 값을 통해 출력하였다.</li>
+          <li>가장 점수가 높은 과목을 찾기 위해 for in문을 사용해 student 변수의 item들을 돌며 max_val 변수와 비교하여 현재 value의 값이 더 크다면 max_val을 value로, max_key를 key로 변경하는 방식을 사용하였다. for문이 종료되면 max_val과 max_key에는 가장 점수가 높은 과목의 점수와 과목명이 저장되었으므로 print문으로 출력하였다.</li>
+          <li>for in문을 사용할 때 평균값을 계산하기 위해 average 변수에 모든 value의 값을 더하여 저장하였고, 마지막에 len 함수로 student 변수의 길이만큼 나누어 평균 점수를 계산하였다.</li>
+        </ul>
+      </li>
+      <li>
+        <p>코드</p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> --><td class="rouge-code"><pre>  <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+  <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="nb">sum</span> <span class="o">=</span> <span class="nb">sum</span> <span class="o">+</span> <span class="n">n</span>
+      <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
+  <span class="k">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td> --><td class="rouge-code"><pre>  <span class="n">student</span> <span class="o">=</span> <span class="p">{</span><span class="s">'국어'</span><span class="p">:</span><span class="mi">85</span><span class="p">,</span> <span class="s">'영어'</span><span class="p">:</span><span class="mi">70</span><span class="p">,</span> <span class="s">'수학'</span><span class="p">:</span><span class="mi">63</span><span class="p">,</span> <span class="s">'과학'</span><span class="p">:</span><span class="mi">59</span><span class="p">,</span> <span class="s">'사회'</span><span class="p">:</span><span class="mi">100</span><span class="p">}</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">'국어 :'</span><span class="p">,</span> <span class="n">student</span><span class="p">[</span><span class="s">'국어'</span><span class="p">])</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">'영어 :'</span><span class="p">,</span> <span class="n">student</span><span class="p">[</span><span class="s">'영어'</span><span class="p">])</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">'수학 :'</span><span class="p">,</span> <span class="n">student</span><span class="p">[</span><span class="s">'수학'</span><span class="p">])</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">'과학 :'</span><span class="p">,</span> <span class="n">student</span><span class="p">[</span><span class="s">'과학'</span><span class="p">])</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">'사회 :'</span><span class="p">,</span> <span class="n">student</span><span class="p">[</span><span class="s">'사회'</span><span class="p">])</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">'-------------------------'</span><span class="p">)</span>
+
+  <span class="n">max_val</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">max_key</span> <span class="o">=</span> <span class="s">''</span>
+  <span class="n">average</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">student</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="n">average</span> <span class="o">=</span> <span class="n">average</span> <span class="o">+</span> <span class="n">val</span>
+      <span class="k">if</span> <span class="n">val</span> <span class="o">&gt;</span> <span class="n">max_val</span><span class="p">:</span>
+          <span class="n">max_val</span> <span class="o">=</span> <span class="n">val</span>
+          <span class="n">max_key</span> <span class="o">=</span> <span class="n">key</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">max_key</span><span class="p">,</span> <span class="s">':'</span><span class="p">,</span> <span class="n">max_val</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">'-------------------------'</span><span class="p">)</span>
+
+  <span class="k">print</span><span class="p">(</span><span class="s">'평균 : '</span><span class="p">,</span> <span class="n">average</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">student</span><span class="p">))</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

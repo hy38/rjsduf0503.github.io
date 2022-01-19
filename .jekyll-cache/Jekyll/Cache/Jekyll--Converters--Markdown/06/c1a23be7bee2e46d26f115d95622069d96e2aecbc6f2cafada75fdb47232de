@@ -1,0 +1,97 @@
+I"	<ul>
+  <li>오늘의 계획
+    <ul>
+      <li>프로그래머스/백준 사이트에서 알고리즘 문제 풀이(분할 정복)</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<ul>
+  <li>오늘의 회고
+    <ul>
+      <li>분할 정복 문제 풀이 : 백준 2630번(색종이 만들기)
+  <img src="https://user-images.githubusercontent.com/34560965/129198342-7d23cd99-ecc4-4239-9429-f469bb40d3a2.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/129198367-7888b545-438b-4aff-a5ec-f23ec6546f4c.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/129198389-6a288665-fd70-4dbb-a418-2afdda58e32c.png" alt="image" />
+        <ul>
+          <li>동계 모각코 때 풀이한 분할 정복 문제와 유사하였다.</li>
+          <li>색종이의 초기 위치인 0,0부터 시작하여 색종이의 모든 사분면을 판단하여 다른 색이 있다면 재귀를 사용해 사분할한 색종이를 다시 check하도록 하였고, 전부 흰색이거나 파란색인 경우에 색종이의 개수를 추가하였다.</li>
+        </ul>
+      </li>
+      <li>
+        <p>코드 :</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+</pre></td> --><td class="rouge-code"><pre>  ```python
+  n = int(input())
+  paper = [list(map(int, input().split(" "))) for _ in range(n)]
+
+  white = 0
+  blue = 0
+
+
+  def check(x, y, n):
+      global blue, white
+      validation = paper[x][y]
+
+      for i in range(x, x + n):
+          for j in range(y, y + n):
+              if validation != paper[i][j]:
+                  check(x, y, int(n/2))
+                  check(x + int(n/2), y, int(n/2))
+                  check(x + int(n/2), y + int(n/2), int(n/2))
+                  check(x, y + int(n/2), int(n/2))
+                  return
+
+      if validation == 0: # 전부 흰색
+          white += 1
+          return
+      else: # 전부 파란색
+          blue += 1
+          return
+
+
+  check(0, 0, n)
+  print(white)
+  print(blue)
+  ```
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

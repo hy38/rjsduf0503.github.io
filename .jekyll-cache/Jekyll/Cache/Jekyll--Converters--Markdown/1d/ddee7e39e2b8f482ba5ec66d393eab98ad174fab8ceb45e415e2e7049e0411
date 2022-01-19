@@ -1,0 +1,89 @@
+I"�<ul>
+  <li>오늘의 계획
+    <ul>
+      <li>프로그래머스/백준 사이트에서 알고리즘 문제 풀이(이분 탐색)</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+<ul>
+  <li>오늘의 회고
+    <ul>
+      <li>이분 탐색 문제 풀이 : 징검다리(프로그래머스 LEVEL 4)
+  <img src="https://user-images.githubusercontent.com/34560965/129933524-f1349588-0af3-4341-ae36-300cb8689333.png" alt="image" />
+        <ul>
+          <li>처음에 정렬한 다음 각 거리 별로 비교하려고 하였는데 이분 탐색 방법으로 변경하였다.</li>
+          <li>left, mid, right로 나누어 mid가 바위 사이의 거리보다 큰 경우에만 count값을 증가시켜 count값이 n보다 작거나 같다면(문제 조건에서는 n이지만 n으로 제출했을 때 통과가 안돼서 찾아보니 이하로 하면 된다고 했다.) 우측에서 찾아야 하므로 left를 mid + 1로 변경하고 answer와 mid 중 큰 값으로 answer로 설정하였다.</li>
+          <li>count값이 n보다 크다면 좌측에서 찾아야 하므로 right를 mid - 1로 변경한다.</li>
+        </ul>
+      </li>
+      <li>
+        <p>코드 :</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre></td><td class="rouge-code"><pre>  ```python
+  def solution(distance, rocks, n):
+      answer = 0
+      rocks.sort()
+      left = 1
+      right = distance
+      mid = 0
+            
+      while left &lt;= right:
+          mid = (left + right) // 2
+          prev = 0
+          count = 0
+                
+          for rock in rocks:
+              if mid &gt; rock - prev:
+                  count += 1
+              else:
+                  prev = rock
+                        
+          if distance - prev &lt; mid:
+              count += 1
+                    
+          if count &lt;= n:
+              left = mid + 1
+              answer = max(answer, mid)
+          else:
+              right = mid - 1
+            
+      return answer
+  ```
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

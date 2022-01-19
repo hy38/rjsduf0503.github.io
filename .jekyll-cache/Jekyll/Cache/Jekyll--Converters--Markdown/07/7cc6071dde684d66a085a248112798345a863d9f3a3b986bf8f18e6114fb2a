@@ -1,0 +1,17 @@
+I"Q<ul>
+  <li>오늘의 계획
+    <ul>
+      <li>
+        <p>대표적인 관계형 DB인 MYSQL 강의 듣기</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>  - 섹션 1. Database 2 - MySQL 서론	 
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+      <li>
+        <p>동적 프로그래밍 알고리즘 공부 및 문제 풀이</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

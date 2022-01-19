@@ -1,0 +1,103 @@
+I"�!<ul>
+  <li>2021/04/11 리액트 스터디
+<img src="https://user-images.githubusercontent.com/34560965/114304556-ce6c8d00-9b0e-11eb-9024-453135b1afda.png" alt="image" />
+    <ul>
+      <li>
+        <p>사용 언어 : JAVASCRIPT</p>
+      </li>
+      <li>각 함수의 목표 :
+        <ul>
+          <li>cloneBySelf : 배열 안에 있는 각각의 숫자들 뒤에 자기 자신을 한 번 더 붙인 숫자들로 새로운 배열을 만듭니다.</li>
+          <li>sortDescending : 배열 안에 있는 숫자들을 내림차순으로 정렬합니다.</li>
+          <li>moreThanFifty : 배열 안에 있는 숫자들 중 50보다 큰 숫자만 뽑아 새로운 배열을 만듭니다.</li>
+          <li>sumAll : 배열 안에 있는 모든 숫자를 더해 그 값을 반환합니다.</li>
+          <li>divide : sumAll의 결과의 앞에 0 3개, 뒤에 0 4개를 붙인 문자열을 만들고 이를 각 자리수별로 나누어 새로운 배열을 만듭니다.</li>
+        </ul>
+      </li>
+      <li>해결 방법 :
+        <ul>
+          <li>cloneBySelf : 처음에 단순히 for문으로 각 인덱스에 추가하면 되지 않을까 생각했는데 map을 사용해 각 인덱스에 같은 값을 추가하는 형식으로 문제를 해결할 수 있었다.</li>
+          <li>sortDescending : 얕은 복사를 방지하기 위해 slice()함수를 통해 깊은 복사를 하고, sort 함수를 통해 내림차순으로 정렬하였다.</li>
+          <li>moreThanFifty : filter 함수를 통해 배열에서 50보다 큰 숫자들만을 뽑아 새로운 배열을 만들어 주었다.</li>
+          <li>sumAll : reduce 함수를 통해 배열 속의 모든 숫자를 더해주었다. 여기서 reduce 함수 속 0은 초기값을 의미한다.</li>
+          <li>divide : split함수의 인자로 ““를 넣어 각 문자열을 한 글자씩 떼어 배열의 형태로 만들어주었다.</li>
+          <li>map 함수를 통해 생각보다 많이 간단하게 표현할 수 있다는걸 다시 깨닫게 되었다. map 함수 사용에 친숙해 져야겠다.</li>
+        </ul>
+      </li>
+      <li>코드</li>
+    </ul>
+
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+</pre></td><td class="rouge-code"><pre> <span class="kd">class</span> <span class="nx">ArrayFunctions</span> <span class="p">{</span>
+ <span class="cm">/* 여기에 함수를 작성하면 됩니다. */</span>
+
+ <span class="kd">static</span> <span class="nx">cloneBySelf</span> <span class="o">=</span> <span class="p">(</span><span class="nx">givenArray</span><span class="p">)</span> <span class="o">=&gt;</span>
+     <span class="nx">givenArray</span><span class="p">.</span><span class="nx">slice</span><span class="p">().</span><span class="nx">map</span><span class="p">((</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Number</span><span class="p">(</span><span class="nb">String</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">+</span> <span class="nb">String</span><span class="p">(</span><span class="nx">e</span><span class="p">)));</span>
+
+ <span class="kd">static</span> <span class="nx">sortDescending</span> <span class="o">=</span> <span class="p">(</span><span class="nx">givenArray</span><span class="p">)</span> <span class="o">=&gt;</span>
+     <span class="nx">givenArray</span><span class="p">.</span><span class="nx">slice</span><span class="p">().</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">b</span> <span class="o">-</span> <span class="nx">a</span><span class="p">);</span>
+
+ <span class="kd">static</span> <span class="nx">moreThanFifty</span> <span class="o">=</span> <span class="p">(</span><span class="nx">givenArray</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">givenArray</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">e</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">);</span>
+
+ <span class="kd">static</span> <span class="nx">sumAll</span> <span class="o">=</span> <span class="p">(</span><span class="nx">givenArray</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">givenArray</span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+ <span class="kd">static</span> <span class="nx">divide</span> <span class="o">=</span> <span class="p">(</span><span class="nx">givenNumber</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span><span class="dl">"</span><span class="s2">000</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">givenNumber</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">0000</span><span class="dl">"</span><span class="p">).</span><span class="nx">split</span><span class="p">(</span><span class="dl">""</span><span class="p">);</span>
+ <span class="p">}</span>
+
+
+ <span class="cm">/* 이 밑으로는 아무것도 작성하면 안됩니다. */</span>
+ <span class="kd">const</span> <span class="nx">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">];</span>
+
+ <span class="kd">const</span> <span class="nx">cloneNumbers</span> <span class="o">=</span> <span class="nx">ArrayFunctions</span><span class="p">.</span><span class="nx">cloneBySelf</span><span class="p">(</span><span class="nx">numbers</span><span class="p">);</span>
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">cloneNumbers</span><span class="p">);</span>
+
+ <span class="kd">const</span> <span class="nx">sortNumbers</span> <span class="o">=</span> <span class="nx">ArrayFunctions</span><span class="p">.</span><span class="nx">sortDescending</span><span class="p">(</span><span class="nx">cloneNumbers</span><span class="p">);</span>
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sortNumbers</span><span class="p">);</span>
+
+ <span class="kd">const</span> <span class="nx">moreThanFifty</span> <span class="o">=</span> <span class="nx">ArrayFunctions</span><span class="p">.</span><span class="nx">moreThanFifty</span><span class="p">(</span><span class="nx">sortNumbers</span><span class="p">);</span>
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">moreThanFifty</span><span class="p">);</span>
+
+ <span class="kd">const</span> <span class="nx">sumAll</span> <span class="o">=</span> <span class="nx">ArrayFunctions</span><span class="p">.</span><span class="nx">sumAll</span><span class="p">(</span><span class="nx">moreThanFifty</span><span class="p">);</span>
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sumAll</span><span class="p">);</span>
+
+ <span class="kd">const</span> <span class="nx">divide</span> <span class="o">=</span> <span class="nx">ArrayFunctions</span><span class="p">.</span><span class="nx">divide</span><span class="p">(</span><span class="nx">sumAll</span><span class="p">);</span>
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">divide</span><span class="p">);</span>
+
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+</ul>
+:ET

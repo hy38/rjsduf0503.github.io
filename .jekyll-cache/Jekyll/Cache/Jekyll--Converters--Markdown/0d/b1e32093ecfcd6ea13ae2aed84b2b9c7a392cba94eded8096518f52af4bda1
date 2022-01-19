@@ -1,0 +1,117 @@
+I"G<ul>
+  <li>오늘의 계획
+    <ul>
+      <li>Inflean을 통한 react 공부하기
+        <ul>
+          <li>수업 소개</li>
+          <li>공부 전략</li>
+          <li>개발환경의 종류</li>
+          <li>npm을 이용해서 create react app 설치</li>
+          <li>create react app을 이용해서 개발환경구축</li>
+          <li>샘플 웹앱 실행</li>
+          <li>JS 코딩하는 법</li>
+        </ul>
+      </li>
+      <li>프로그래머스/백준 사이트에서 알고리즘 문제 풀이(그리디 알고리즘)</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<ul>
+  <li>오늘의 회고
+    <ul>
+      <li>react 정리
+        <ul>
+          <li>리액트에서는 사용자 정의 태그를 Component라고 한다.
+            <ol>
+              <li>가독성</li>
+              <li>재사용성</li>
+              <li>유지보수</li>
+            </ol>
+          </li>
+          <li>npm은 프로그램을 설치하는, npx는 create-react-app이라는 프로그램을 임시로 설치하고 지우는 차이점이 있다.
+            <ol>
+              <li>npx는 공간 낭비하지 않는다.</li>
+              <li>실행할 때 마다 다운로드를 새로 하기 때문에 항상 최신 버전이다.</li>
+            </ol>
+          </li>
+          <li>create-react-app을 통해 react-app을 생성하고, npm run start를 통해 실행한다.</li>
+          <li>처음 실행 시 생기는 public 폴더 속 index.html의 id가 root인 div 태그 안쪽에 리액트를 통해 만든 컴포넌트를 넣도록 약속했다.
+            <ol>
+              <li>이는 src 폴더의 파일들을 수정함으로 만들 수 있다.</li>
+              <li>대부분의 파일을 src 폴더에 넣어야 한다.</li>
+              <li>진입 파일은 index.js</li>
+              <li>아래의 사진에서 App /이라고 하는 컴포넌트는 실제 구현이 하단의 App.js의 div 태그 전체이다.
+  <img src="https://user-images.githubusercontent.com/34560965/124121432-d99cdc80-daaf-11eb-8f47-6ccc4055592c.png" alt="image" /></li>
+              <li>리액트는 저장을 하면 바로 reload가 된다.
+  <img src="https://user-images.githubusercontent.com/34560965/124121973-7cedf180-dab0-11eb-8977-d8cd4582be62.png" alt="image" /></li>
+            </ol>
+          </li>
+        </ul>
+      </li>
+      <li>그리디 알고리즘 문제 풀이 : 큰 수 만들기(프로그래머스 LEVEL 2)
+  <img src="https://user-images.githubusercontent.com/34560965/124137259-77000c80-dac0-11eb-82c8-bd04f5c6ebe2.png" alt="image" />
+        <ul>
+          <li>해결 방법 :
+            <ul>
+              <li>처음에 내장 함수 combination을 import하여 모든 경우의 수로 만든 값을 heapq에 maxHeap의 형태로 넣어 heapq의 heappop을 통해 문제를 해결하고자 하였지만 시간 초과 문제가 발생하여 다른 방식으로 문제를 해결하였다.</li>
+              <li>그리디 알고리즘을 활용하여 문제를 해결하였는데, 숫자가 담긴 number를 돌며 가장 큰 값이 나올 때 그 위치를 지정한 다음 그 다음 위치부터 다시 값 비교를 하는 형식으로 문제를 해결하였다.</li>
+              <li>이 때 시간 초과 문제가 발생하여 str형을 int형으로 변환하지 않고 그대로 비교하고, 9라는 값이 나왔을 때 바로 다음 인덱스로 넘어가도록 함으로 문제를 해결할 수 있었다.</li>
+            </ul>
+          </li>
+          <li>
+            <p>코드 :</p>
+
+            <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">def</span> <span class="nf">solution</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+      <span class="n">answer</span> <span class="o">=</span> <span class="s">''</span>
+      <span class="n">tempPos</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">number</span><span class="p">)</span><span class="o">-</span><span class="n">k</span>
+                    
+      <span class="k">while</span><span class="p">(</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+          <span class="n">tempMax</span> <span class="o">=</span> <span class="s">'0'</span>
+          <span class="k">if</span> <span class="n">number</span><span class="p">[</span><span class="n">tempPos</span><span class="p">]</span> <span class="o">==</span> <span class="s">'9'</span><span class="p">:</span>
+              <span class="n">tempMax</span> <span class="o">=</span> <span class="n">number</span><span class="p">[</span><span class="n">tempPos</span><span class="p">]</span>
+          <span class="k">else</span><span class="p">:</span>
+              <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tempPos</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">-</span> <span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                  <span class="k">if</span> <span class="n">number</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">tempMax</span><span class="p">:</span>
+                      <span class="n">tempMax</span> <span class="o">=</span> <span class="n">number</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                      <span class="n">tempPos</span> <span class="o">=</span> <span class="n">i</span>
+                      <span class="k">if</span> <span class="n">tempMax</span> <span class="o">==</span> <span class="s">'9'</span><span class="p">:</span>
+                          <span class="k">break</span>
+          <span class="n">tempPos</span> <span class="o">+=</span> <span class="mi">1</span>
+          <span class="n">size</span> <span class="o">-=</span> <span class="mi">1</span>
+          <span class="n">answer</span> <span class="o">+=</span> <span class="n">tempMax</span>
+                    
+      <span class="k">return</span> <span class="n">answer</span>
+</pre></td></tr></tbody></table></code></pre></div>            </div>
+          </li>
+        </ul>
+      </li>
+      <li>2문제를 해결하는 것을 목표로 하였으나 1문제 밖에 해결하지 못하였다. 다음부터는 더 열심히 풀어보도록 해야겠다.</li>
+    </ul>
+  </li>
+</ul>
+:ET

@@ -1,0 +1,53 @@
+I"�<ul>
+  <li>
+    <p>2주차 과제 : csv 파일 읽기</p>
+
+    <p><img src="https://user-images.githubusercontent.com/34560965/136653483-b7f058e2-7a16-487f-be50-892c8dedbf99.png" alt="image" /></p>
+
+    <ul>
+      <li>사용 언어 : python</li>
+      <li>
+        <p>해결 날짜 : 2021-09-18</p>
+      </li>
+      <li>
+        <p>코드 설명 :</p>
+
+        <ul>
+          <li>pandas의 read_csv 함수로 small_iris.csv 파일을 읽어온다.</li>
+          <li>groupby 함수로 Species 열의 같은 값을 가진 종들끼리 묶고, 그 평균값을 소수 셋째 자리까지 계산하여 변수 gb에 저장한다.</li>
+          <li>그 후 for in 문 속 iterrows 함수로 행에 대한 순환을 반복하여 각 행의 값(평균 벡터)들을 순서대로 출력하였다.</li>
+        </ul>
+      </li>
+      <li>
+        <p>코드</p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td> --><td class="rouge-code"><pre>  <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+
+  <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'C:/Users/rjsdu/OneDrive/바탕 화면/3-2/기계학습(박정희 교수님)/과제/2주차/small_iris.csv'</span><span class="p">,</span> 
+                  <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s">'Sepal length'</span><span class="p">,</span> <span class="s">'Sepal width'</span><span class="p">,</span> <span class="s">'Petal length'</span><span class="p">,</span> <span class="s">'Petal width'</span><span class="p">,</span> <span class="s">'Species'</span><span class="p">])</span>
+  <span class="n">gb</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'Species'</span><span class="p">]).</span><span class="n">mean</span><span class="p">().</span><span class="nb">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">species</span><span class="p">,</span> <span class="n">rows</span> <span class="ow">in</span> <span class="n">gb</span><span class="p">.</span><span class="n">iterrows</span><span class="p">():</span>
+      <span class="k">print</span><span class="p">(</span><span class="s">"클래스 "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">species</span><span class="p">)</span> <span class="o">+</span> <span class="s">"의 평균 벡터는 ["</span> <span class="o">+</span> 
+          <span class="nb">str</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="s">'Sepal length'</span><span class="p">])</span> <span class="o">+</span> <span class="s">", "</span> <span class="o">+</span>
+          <span class="nb">str</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="s">'Sepal width'</span><span class="p">])</span> <span class="o">+</span> <span class="s">", "</span> <span class="o">+</span>
+          <span class="nb">str</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="s">'Petal length'</span><span class="p">])</span> <span class="o">+</span> <span class="s">", "</span> <span class="o">+</span>
+          <span class="nb">str</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="s">'Petal width'</span><span class="p">])</span> <span class="o">+</span> <span class="s">"]"</span>
+          <span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

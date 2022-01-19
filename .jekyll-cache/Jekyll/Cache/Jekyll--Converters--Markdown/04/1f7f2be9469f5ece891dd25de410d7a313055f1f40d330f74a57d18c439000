@@ -1,0 +1,174 @@
+I"�5<ul>
+  <li>11주차 과제 - PIVOT, UNPIVOT, 정규표현식</li>
+  <li>실습 환경 : Oracle</li>
+  <li>
+    <p>해결 날짜 : 2021-05-15</p>
+  </li>
+  <li>과제
+    <ul>
+      <li>
+        <p>11-1. [예제1]~[예제5]를 참고하여 PLAYER 테이블에서 팀별로 각 포지션별 선수의 수와 평균 신장(키)을 구하는 뷰를 생성하고 생성된 뷰의 전체 데이터를 조회하는 SQL문을 작성하라. (단, PIVOT절을 사용하고 팀 ID순으로 정렬한다.) [2점]</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">CREATE</span> <span class="k">VIEW</span> <span class="n">V_PLAYER_HEIGHT</span> <span class="k">AS</span>
+  <span class="k">SELECT</span> <span class="o">*</span>
+  <span class="k">FROM</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">TEAM_ID</span><span class="p">,</span> <span class="k">POSITION</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="k">FROM</span> <span class="n">PLAYER</span><span class="p">)</span>
+  <span class="n">PIVOT</span> <span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">HEIGHT</span><span class="p">)</span> <span class="err">평균키</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="nv">"선수의 수"</span>
+      <span class="k">FOR</span> <span class="k">POSITION</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'DF'</span> <span class="err">수비수</span><span class="p">,</span> <span class="s1">'GK'</span> <span class="err">골키퍼</span><span class="p">,</span> <span class="s1">'FW'</span> <span class="err">공격수</span><span class="p">,</span> <span class="s1">'MF'</span> <span class="err">미드필더</span><span class="p">))</span>
+  <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">TEAM_ID</span><span class="p">;</span>
+  <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">V_PLAYER_HEIGHT</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/118362406-62c48680-b5ca-11eb-9c0f-4479b392a602.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/118362407-648e4a00-b5ca-11eb-89ab-d9e6aef31091.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>11-2. [예제6]~[예제11]을 참고하여 [과제11-1]에서 생성한 뷰의 전체 데이터 조회 결과 중 각 팀에서 포지션이 ‘MF’인 선수들의 정보(선수의 수, 평균 신장(키))를 조회하는 SQL문을 작성하라. (단, UNPIVOT절을 사용하고 팀 ID순으로 정렬한다.) [2점]</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">TEAM_ID</span> <span class="err">팀명</span><span class="p">,</span> <span class="n">COL</span><span class="p">,</span> <span class="k">DATA</span>
+  <span class="k">FROM</span> <span class="n">V_PLAYER_HEIGHT</span>
+  <span class="n">UNPIVOT</span> <span class="p">(</span><span class="k">DATA</span>
+      <span class="k">FOR</span> <span class="n">COL</span> <span class="k">IN</span> <span class="p">(</span><span class="nv">"미드필더_선수의 수"</span><span class="p">,</span> <span class="nv">"미드필더_평균키"</span><span class="p">))</span>
+  <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">TEAM_ID</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/118362463-8be51700-b5ca-11eb-9bd5-4e8b464f7425.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>11-3. EMP 테이블에서 이메일 주소가 ‘소문자+숫자@소문자+숫자.소문자’ 패턴인 직원의 직원번호, 직원이름, 직무, 이메일 주소를 출력하는 SQL문을 작성하라. (단, REGEXP_LIKE 함수를 사용하며 POSIX 연산자와 PERL 정규 표현식 연산자 두 가지 방법을 모두 사용하여 출력한다.) [2점]</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td> --><td class="rouge-code"><pre>  <span class="c1">-- with POSIX</span>
+  <span class="k">SELECT</span> <span class="n">EMPNO</span> <span class="err">직원번호</span><span class="p">,</span> <span class="n">ENAME</span> <span class="err">직원이름</span><span class="p">,</span> <span class="n">JOB</span> <span class="err">직무</span><span class="p">,</span> <span class="n">EMAIL</span> <span class="nv">"이메일 주소"</span>
+  <span class="k">FROM</span> <span class="n">EMP</span>
+  <span class="k">WHERE</span> <span class="n">REGEXP_LIKE</span><span class="p">(</span><span class="n">EMAIL</span><span class="p">,</span> <span class="s1">'^[[:lower:][:digit:]]+@[[:lower:][:digit:]]+</span><span class="se">\.</span><span class="s1">[[:lower:]]+$'</span><span class="p">);</span>
+
+  <span class="c1">--with PERL</span>
+  <span class="k">SELECT</span> <span class="n">EMPNO</span> <span class="err">직원번호</span><span class="p">,</span> <span class="n">ENAME</span> <span class="err">직원이름</span><span class="p">,</span> <span class="n">JOB</span> <span class="err">직무</span><span class="p">,</span> <span class="n">EMAIL</span> <span class="nv">"이메일 주소"</span>
+  <span class="k">FROM</span> <span class="n">EMP</span>
+  <span class="k">WHERE</span> <span class="n">REGEXP_LIKE</span><span class="p">(</span><span class="n">EMAIL</span><span class="p">,</span> <span class="s1">'^</span><span class="se">\w</span><span class="s1">+?@</span><span class="se">\w</span><span class="s1">+?</span><span class="se">\.</span><span class="s1">(</span><span class="se">\w</span><span class="s1">)+?$'</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/118362491-ab7c3f80-b5ca-11eb-871a-0db91b993d41.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/118362494-ae773000-b5ca-11eb-831e-925163d87c33.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>11-4. EMP 테이블에서 모든 직원의 직원번호, 직원이름, 기존의 핸드폰 번호, ‘숫자-숫자-숫자’ 패턴으로 변경한 핸드폰 번호를 출력하는 SQL문을 작성하라. (단, REGEXP_REPLACE 함수를 사용하며, POSIX 연산자와 PERL 정규 표현식 연산자 두 가지 방법을 모두 사용하여 출력한다.) [2점]</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td> --><td class="rouge-code"><pre>  <span class="c1">-- with POSIX</span>
+  <span class="k">SELECT</span> <span class="n">EMPNO</span> <span class="err">직원번호</span><span class="p">,</span> <span class="n">ENAME</span> <span class="err">직원이름</span><span class="p">,</span> <span class="n">MOBILE</span> <span class="nv">"기존 핸드폰 번호"</span><span class="p">,</span> 
+          <span class="n">REGEXP_REPLACE</span><span class="p">(</span><span class="n">MOBILE</span><span class="p">,</span> <span class="s1">'([[:digit:]]{3})</span><span class="se">\.</span><span class="s1">([[:digit:]]{4})</span><span class="se">\.</span><span class="s1">([[:digit:]]{4})'</span><span class="p">,</span> <span class="s1">'</span><span class="se">\1</span><span class="s1">-</span><span class="se">\2</span><span class="s1">-</span><span class="se">\3</span><span class="s1">'</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">"변경한 핸드폰 번호"</span>
+  <span class="k">FROM</span> <span class="n">EMP</span><span class="p">;</span>
+
+  <span class="c1">-- with PERL</span>
+  <span class="k">SELECT</span> <span class="n">EMPNO</span> <span class="err">직원번호</span><span class="p">,</span> <span class="n">ENAME</span> <span class="err">직원이름</span><span class="p">,</span> <span class="n">MOBILE</span> <span class="nv">"기존 핸드폰 번호"</span><span class="p">,</span> 
+          <span class="n">REGEXP_REPLACE</span><span class="p">(</span><span class="n">MOBILE</span><span class="p">,</span> <span class="s1">'(</span><span class="se">\d</span><span class="s1">{3}?)</span><span class="se">\.</span><span class="s1">(</span><span class="se">\d</span><span class="s1">{4}?)</span><span class="se">\.</span><span class="s1">(</span><span class="se">\d</span><span class="s1">{4}?)'</span><span class="p">,</span> <span class="s1">'</span><span class="se">\1</span><span class="s1">-</span><span class="se">\2</span><span class="s1">-</span><span class="se">\3</span><span class="s1">'</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">"변경한 핸드폰 번호"</span> 
+  <span class="k">FROM</span> <span class="n">EMP</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/118362527-cf3f8580-b5ca-11eb-9c88-28dd05273abd.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/118362532-d1a1df80-b5ca-11eb-9333-08cd1426b229.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>11-5. EMP 테이블에서 개인 홈페이지가 있는 직원들의 직원번호, 직원이름, 기존의 개인 홈페이지 주소, 메인 URL만 분리한 개인 홈페이지 주소 (예시: http://www.naver.com/)를 출력하는 SQL문을 작성하라. (단, REGEXP_SUBSTR 함수를 사용하며 POSIX 연산자와 PERL 정규 표현식 연산자 두 가지 방법을 모두 사용하여 출력하고 개인 홈페이지 주소가 없는 직원은 제외한다.) [2점]</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td> --><td class="rouge-code"><pre>  <span class="c1">-- with POSIX</span>
+  <span class="k">SELECT</span> <span class="n">EMPNO</span> <span class="err">직원번호</span><span class="p">,</span> <span class="n">ENAME</span> <span class="err">직원이름</span><span class="p">,</span> <span class="n">PERSONAL_HOMEPAGE</span> <span class="nv">"기존 홈페이지 주소"</span><span class="p">,</span>
+          <span class="n">REGEXP_SUBSTR</span><span class="p">(</span><span class="n">PERSONAL_HOMEPAGE</span><span class="p">,</span> <span class="s1">'http://([[:alnum:]]+</span><span class="se">\.</span><span class="s1">?){3,4}</span><span class="se">\/</span><span class="s1">'</span><span class="p">)</span> <span class="nv">"메인 URL"</span>
+  <span class="k">FROM</span> <span class="n">EMP</span>
+  <span class="k">WHERE</span> <span class="n">PERSONAL_HOMEPAGE</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
+
+  <span class="c1">-- with PERL</span>
+  <span class="k">SELECT</span> <span class="n">EMPNO</span> <span class="err">직원번호</span><span class="p">,</span> <span class="n">ENAME</span> <span class="err">직원이름</span><span class="p">,</span> <span class="n">PERSONAL_HOMEPAGE</span> <span class="nv">"기존 홈페이지 주소"</span><span class="p">,</span>
+          <span class="n">REGEXP_SUBSTR</span><span class="p">(</span><span class="n">PERSONAL_HOMEPAGE</span><span class="p">,</span> <span class="s1">'http://(</span><span class="se">\w</span><span class="s1">+</span><span class="se">\.</span><span class="s1">?){3,4}</span><span class="se">\/</span><span class="s1">'</span><span class="p">)</span> <span class="nv">"메인 URL"</span>
+  <span class="k">FROM</span> <span class="n">EMP</span>
+  <span class="k">WHERE</span> <span class="n">PERSONAL_HOMEPAGE</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/118362597-0f9f0380-b5cb-11eb-89a4-0ae6c7eddc1f.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/118362601-12015d80-b5cb-11eb-813a-c31d82429d17.png" alt="image" /></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+:ET

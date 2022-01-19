@@ -1,0 +1,118 @@
+I"K%<ul>
+  <li>5주차 과제 - GROUPBY, HAVING, ORDERBY</li>
+  <li>실습 환경 : Oracle</li>
+  <li>
+    <p>해결 날짜 : 2021-04-02</p>
+  </li>
+  <li>과제
+    <ul>
+      <li>
+        <p>5-1) [예제1-2] 변형하여 PLAYER 테이블의 TEAM_ID별 선수들의 평균 키와 평균 몸무게를 출력하는 SQL 문과 그 결과를 출력하라.(단 평균키, 평균 몸무게는 소수점 1째 자리까지 표시하세요.) [1점]</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">TEAM_ID</span> <span class="nv">"팀 아이디"</span><span class="p">,</span> <span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">HEIGHT</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="nv">"평균 키"</span><span class="p">,</span> <span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">WEIGHT</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="nv">"평균 몸무게"</span>
+  <span class="k">FROM</span> <span class="n">PLAYER</span>
+  <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">TEAM_ID</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115106009-43234980-9f9d-11eb-94dd-d347c7218ec2.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>5-2) [예제2-2]를 변형하여 EMP 테이블에서 역할(JOB)별 직원수, 연봉 총합, 연봉 평균, 연봉의 표준편차를 구하는 SQL문을 작성하고 그 결과를 출력하라. (단, 연봉은 월 급여와 커미션을 포함하여 계산한다. 또한, 소수점 이하 자리는 모두 버리고, 평균 연봉이 30,000불을 초과하는 JOB만 출력한다.) [1점]</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">JOB</span> <span class="err">역할</span>
+      <span class="p">,</span><span class="k">COUNT</span><span class="p">(</span><span class="n">JOB</span><span class="p">)</span> <span class="err">직원수</span>
+      <span class="p">,</span><span class="k">SUM</span><span class="p">(</span><span class="n">SAL</span><span class="p">)</span><span class="o">*</span><span class="mi">12</span><span class="o">+</span><span class="k">SUM</span><span class="p">(</span><span class="n">NVL</span><span class="p">(</span><span class="n">COMM</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span> <span class="err">연봉총합</span>
+      <span class="p">,</span><span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">SAL</span><span class="p">)</span><span class="o">*</span><span class="mi">12</span><span class="o">+</span><span class="k">AVG</span><span class="p">(</span><span class="n">NVL</span><span class="p">(</span><span class="n">COMM</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span><span class="mi">0</span><span class="p">)</span> <span class="err">연봉평균</span>
+      <span class="p">,</span><span class="n">ROUND</span><span class="p">(</span><span class="n">STDDEV</span><span class="p">(</span><span class="n">SAL</span><span class="o">*</span><span class="mi">12</span> <span class="o">+</span> <span class="n">NVL</span><span class="p">(</span><span class="n">COMM</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span><span class="mi">0</span><span class="p">)</span> <span class="err">연봉의표준편차</span>
+  <span class="k">FROM</span> <span class="n">EMP</span>
+  <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">JOB</span>
+  <span class="k">HAVING</span> <span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">SAL</span><span class="p">)</span><span class="o">*</span><span class="mi">12</span><span class="o">+</span><span class="k">AVG</span><span class="p">(</span><span class="n">NVL</span><span class="p">(</span><span class="n">COMM</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">30000</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115106024-5209fc00-9f9d-11eb-80e0-a744d4d426ef.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>5-3) [예제1-1]을 참고하여 EMP 테이블에서 역할(JOB)이 ‘CLERK’ 이거나 ‘MANAGER’인 직원의 역할, 직원이름, 입사일, 월급여를 출력하는 SQL문을 작성하고 그 결과를 출력하라. (단, JOB, 입사일(내림차순), 월급여(오름차순) 순으로 정렬하여 출력한다.) [1점]</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">JOB</span> <span class="err">역할</span><span class="p">,</span> <span class="n">ENAME</span> <span class="err">직원이름</span><span class="p">,</span> <span class="n">HIREDATE</span> <span class="err">입사일</span><span class="p">,</span> <span class="n">SAL</span> <span class="err">월급여</span> 
+  <span class="k">FROM</span> <span class="n">EMP</span>
+  <span class="k">WHERE</span> <span class="n">JOB</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'MANAGER'</span><span class="p">,</span> <span class="s1">'CLERK'</span><span class="p">)</span>
+  <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">JOB</span> <span class="k">DESC</span><span class="p">,</span> <span class="n">HIREDATE</span> <span class="k">DESC</span><span class="p">,</span> <span class="n">SAL</span> <span class="k">ASC</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115106053-8b426c00-9f9d-11eb-8cce-54f0c5a58610.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>5-4) [예제2-*]를 참고하여 PLAYER 테이블에서 E_PLAYER_NAME이 없는 사람들은 제외하고, 팀별로 소속선수의 수를 조회하되 소속 선수의 수가 20명 이상인 상위 5개 미만의 팀만 출력하는 SQL문을 작성하고 그 결과를 출력하라.(단 WHERE, ORDER BY, GROUP BY, HAVING를 모두 사용하세요.)[2점]</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">T</span><span class="p">.</span><span class="nv">"팀명"</span><span class="p">,</span> <span class="n">T</span><span class="p">.</span><span class="nv">"소속선수의 수"</span>
+  <span class="k">FROM</span> <span class="p">(</span><span class="k">SELECT</span> <span class="n">TEAM_ID</span> <span class="k">AS</span> <span class="err">팀명</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">E_PLAYER_NAME</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">"소속선수의 수"</span>
+      <span class="k">FROM</span> <span class="n">PLAYER</span>
+      <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">TEAM_ID</span>
+      <span class="k">HAVING</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">E_PLAYER_NAME</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">20</span>
+      <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">E_PLAYER_NAME</span><span class="p">)</span> <span class="k">DESC</span>
+      <span class="p">)</span> <span class="n">T</span>
+  <span class="k">WHERE</span> <span class="n">ROWNUM</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115106066-9dbca580-9f9d-11eb-8a76-8895048650b3.png" alt="image" /></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

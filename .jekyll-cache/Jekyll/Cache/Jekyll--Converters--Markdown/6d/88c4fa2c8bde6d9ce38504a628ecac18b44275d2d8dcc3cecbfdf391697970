@@ -1,0 +1,226 @@
+I"�B<ul>
+  <li>9주차 과제 - 그룹 함수, 윈도우 함수</li>
+  <li>실습 환경 : Oracle</li>
+  <li>
+    <p>해결 날짜 : 2021-05-01</p>
+  </li>
+  <li>과제
+    <ul>
+      <li>
+        <p>9-1. [예제12]를 참고하여 PLAYER 테이블에서 팀ID 별, 포지션 별 선수들 수의 합계를 구하는 SQL문을 작성하고 그 결과를 출력하라. (단, 포지션이 NULL인 데이터는 제외하고 팀ID 순으로 정렬한다.) [1점]</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span>
+      <span class="n">DECODE</span><span class="p">(</span><span class="k">GROUPING</span><span class="p">(</span><span class="n">TEAM_ID</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="s1">'All Team'</span><span class="p">,</span> <span class="n">TEAM_ID</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">"팀 아이디"</span><span class="p">,</span>
+      <span class="n">DECODE</span><span class="p">(</span><span class="k">GROUPING</span><span class="p">(</span><span class="k">POSITION</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="s1">'All Position'</span><span class="p">,</span> <span class="k">POSITION</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">"포지션"</span><span class="p">,</span>
+      <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="nv">"선수 수 총합"</span>
+  <span class="k">FROM</span> <span class="n">PLAYER</span>
+  <span class="k">WHERE</span> <span class="k">POSITION</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>
+  <span class="k">GROUP</span> <span class="k">BY</span> <span class="k">GROUPING</span> <span class="k">SETS</span> <span class="p">(</span><span class="n">TEAM_ID</span><span class="p">,</span> <span class="k">POSITION</span><span class="p">)</span>
+  <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">TEAM_ID</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/116743757-58d04e80-aa34-11eb-80e4-9a7bf313f17b.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>9-2. [예제9]를 참고하여 PLAYER 테이블에서 CUBE 함수를 이용하는 한글 질의문과 SQL문을 작성하고 그 결과를 출력하라. [2점]</p>
+
+        <ul>
+          <li>
+            <p>한글 질의문 : PLAYER 테이블에서 팀ID 별, 포지션 별 선수들 수의 합을 구하여 출력하여라. (단, CUBE 함수를 사용하시오)</p>
+          </li>
+          <li>
+            <p>SQL문 :</p>
+          </li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span>
+      <span class="k">CASE</span> <span class="k">GROUPING</span><span class="p">(</span><span class="n">TEAM_ID</span><span class="p">)</span>
+          <span class="k">WHEN</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="s1">'ALL Team'</span>
+          <span class="k">ELSE</span> <span class="n">TEAM_ID</span> <span class="k">END</span> <span class="k">AS</span> <span class="nv">"팀 아이디"</span><span class="p">,</span>
+      <span class="k">CASE</span> <span class="k">GROUPING</span><span class="p">(</span><span class="k">POSITION</span><span class="p">)</span>
+          <span class="k">WHEN</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="s1">'ALL POSITION'</span>
+          <span class="k">ELSE</span> <span class="k">POSITION</span> <span class="k">END</span> <span class="k">AS</span> <span class="nv">"포지션"</span><span class="p">,</span>
+      <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="nv">"선수 수 총합"</span>
+  <span class="k">FROM</span> <span class="n">PLAYER</span>
+  <span class="k">WHERE</span> <span class="k">POSITION</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>
+  <span class="k">GROUP</span> <span class="k">BY</span> <span class="k">CUBE</span> <span class="p">(</span><span class="n">TEAM_ID</span><span class="p">,</span> <span class="k">POSITION</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/116743907-8cab7400-aa34-11eb-93ec-306cd77fbfec.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>9-3. [예제1], [예제2]를 참고하여 PLAYER 테이블에서 팀ID, 소속선수 수, 소속 선수 수가 많은 순으로 팀 순위를 구하는 SQL문을 작성하고 그 결과를 출력하라. (단, 하나의 SQL문으로 작성되어야 하며, 팀 순위는 동일한 값에 대해서 동일한 순서를 부여하는 것과 동일한 순위를 하나의 건수로 취급하는 것 두 가지 방법을 모두 사용하여 출력한다.) [1점] (하나의 쿼리에 짜야함)</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">TEAM_ID</span> <span class="nv">"소속팀 ID"</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">TEAM_ID</span><span class="p">)</span> <span class="nv">"소속 선수 수"</span><span class="p">,</span>
+      <span class="n">RANK</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">TEAM_ID</span><span class="p">)</span> <span class="k">DESC</span><span class="p">)</span> <span class="n">ALL_RANK</span><span class="p">,</span>
+      <span class="n">DENSE_RANK</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">TEAM_ID</span><span class="p">)</span> <span class="k">DESC</span><span class="p">)</span> <span class="n">DENSE_RANK</span>
+  <span class="k">FROM</span> <span class="n">PLAYER</span>
+  <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">TEAM_ID</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/116743968-a51b8e80-aa34-11eb-867d-d1e6cc2946f1.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>9-4. [예제4-1], [예제5]를 참고하여 PLAYER 테이블에서 선수들의 소속팀ID, 선수이름, 선수의 키, 소속팀 선수들 중 최장신 선수의 키, 최단신 선수의 키를 출력하는 SQL문을 작성하고 그 결과를 출력하라. [1점]</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">TEAM_ID</span> <span class="nv">"소속팀 ID"</span><span class="p">,</span> <span class="n">PLAYER_NAME</span> <span class="nv">"선수명"</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="nv">"선수 키"</span><span class="p">,</span>
+      <span class="k">MAX</span><span class="p">(</span><span class="n">HEIGHT</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">TEAM_ID</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">"소속팀의 최장신"</span><span class="p">,</span>
+      <span class="k">MIN</span><span class="p">(</span><span class="n">HEIGHT</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">TEAM_ID</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">"소속팀의 최단신"</span>
+  <span class="k">FROM</span> <span class="n">PLAYER</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/116744016-b6649b00-aa34-11eb-8c9a-206562f7b2bc.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>9-5. [예제7]을 참고하여 PLAYER 테이블에서 같은 연도에 입단한 선수들의 평균 몸무게를 출력하는 SQL문을 작성하고 그 결과를 출력하라. (단, 평균 몸무게는 소수점 첫째자리까지 표시한다.) [1점]</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">PLAYER_ID</span> <span class="nv">"선수 ID"</span><span class="p">,</span> <span class="n">PLAYER_NAME</span> <span class="nv">"선수명"</span><span class="p">,</span> 
+      <span class="n">JOIN_YYYY</span> <span class="nv">"입단년도"</span><span class="p">,</span> <span class="n">WEIGHT</span> <span class="nv">"몸무게"</span><span class="p">,</span>
+      <span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">(</span><span class="n">WEIGHT</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">PARTITION</span> <span class="k">BY</span> <span class="n">JOIN_YYYY</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">JOIN_YYYY</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> 
+                              <span class="k">AS</span> <span class="nv">"해당 선수와 입단년도가 같은 선수들의 평균 몸무게"</span>
+  <span class="k">FROM</span> <span class="n">PLAYER</span>
+  <span class="k">WHERE</span> <span class="n">JOIN_YYYY</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">AND</span> <span class="n">WEIGHT</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/116744134-ddbb6800-aa34-11eb-8907-7efdaa804cae.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>9-6. [예제9], [예제10]을 참고하여 PLAYER 테이블에서 포지션 별로 선수들의 입단연도가 빠른 순으로 포지션명, 선수이름, 입단연도, 포지션 내에서 가장 입단연도가 빠른 선수와 가장 늦은 선수이름을 출력하는 SQL문을 작성하고 그 결과를 출력하라. (단, 입단연도가 같으면 이름 순으로 정렬한다.) <a href="입단연도 Null값 제거 후 출력">2점</a></p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="k">POSITION</span> <span class="nv">"포지션"</span><span class="p">,</span> <span class="n">PLAYER_NAME</span> <span class="nv">"선수명"</span><span class="p">,</span> <span class="n">JOIN_YYYY</span> <span class="nv">"입단년도"</span><span class="p">,</span>
+      <span class="n">FIRST_VALUE</span><span class="p">(</span><span class="n">PLAYER_NAME</span><span class="p">)</span> <span class="n">OVER</span> 
+          <span class="p">(</span><span class="k">PARTITION</span> <span class="k">BY</span> <span class="k">POSITION</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">JOIN_YYYY</span><span class="p">,</span> <span class="n">PLAYER_NAME</span> 
+          <span class="k">ROWS</span> <span class="n">UNBOUNDED</span> <span class="k">PRECEDING</span><span class="p">)</span> 
+          <span class="k">AS</span> <span class="nv">"포지션 내에서 입단년도가 가장 빠른 선수"</span><span class="p">,</span>
+      <span class="n">LAST_VALUE</span><span class="p">(</span><span class="n">PLAYER_NAME</span><span class="p">)</span> <span class="n">OVER</span> 
+          <span class="p">(</span><span class="k">PARTITION</span> <span class="k">BY</span> <span class="k">POSITION</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">JOIN_YYYY</span><span class="p">,</span> <span class="n">PLAYER_NAME</span> 
+          <span class="k">ROWS</span> <span class="k">BETWEEN</span> <span class="k">CURRENT</span> <span class="k">ROW</span> <span class="k">AND</span> <span class="n">UNBOUNDED</span> <span class="k">FOLLOWING</span><span class="p">)</span> 
+          <span class="k">AS</span> <span class="nv">"포지션 내에서 입단년도가 가장 느린 선수"</span>
+  <span class="k">FROM</span> <span class="n">PLAYER</span>
+  <span class="k">WHERE</span> <span class="n">JOIN_YYYY</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/116744218-fc216380-aa34-11eb-9489-3e92e5a6e7cf.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>9-7. [예제17]을 참고하여 PLAYER 테이블에서 NTILE 함수를 이용하는 한글 질의문과 SQL문을 작성하고 그 결과를 출력하라. [2점]</p>
+
+        <ul>
+          <li>
+            <p>한글 질의문 : PLAYER 테이블에서 선수들을 포지션 별로 키가 큰 순으로 정렬하고, 포지션 별로 키를 기준으로 5개의 그룹으로 분류하여라.</p>
+          </li>
+          <li>
+            <p>SQL문 :</p>
+          </li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="k">POSITION</span> <span class="err">포지션</span><span class="p">,</span> <span class="n">PLAYER_NAME</span> <span class="err">선수명</span><span class="p">,</span> <span class="n">HEIGHT</span> <span class="nv">"선수 키"</span><span class="p">,</span>
+          <span class="n">NTILE</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">PARTITION</span> <span class="k">BY</span> <span class="k">POSITION</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">HEIGHT</span> <span class="k">DESC</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">"포지션 별 키 그룹"</span>
+  <span class="k">FROM</span> <span class="n">PLAYER</span>
+  <span class="k">WHERE</span> <span class="n">HEIGHT</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/116744280-122f2400-aa35-11eb-9a5d-5b8fe389c10c.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/116744292-14917e00-aa35-11eb-889d-0067dad2ab9c.png" alt="image" /></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

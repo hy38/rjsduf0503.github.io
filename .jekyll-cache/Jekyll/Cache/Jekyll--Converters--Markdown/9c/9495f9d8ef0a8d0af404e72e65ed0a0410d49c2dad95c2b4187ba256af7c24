@@ -1,0 +1,84 @@
+I"�<ul>
+  <li>
+    <p>정렬 알고리즘 문제 : 프로그래머스 LEVEL 1(타겟 넘버)
+<img src="https://user-images.githubusercontent.com/34560965/104679417-0000d280-5731-11eb-93d3-ae7161d639c3.png" alt="image" /></p>
+
+    <ul>
+      <li>사용 언어 : C++</li>
+      <li>해결 날짜 : 2021-01-15</li>
+    </ul>
+
+    <p><strong>- 해결 방법</strong> :</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre> commands vector를 돌며 각 명령 속 i,j,k의 값들을 저장한다.
+
+ 인자로 주어진 array vector에서 i번째부터 j번째까지 잘라 새 vector arr에 저장한 다음 sort함수로 오름차순 정렬을 수행한 다.
+
+ 마지막으로 정렬된 arr 배열의 k번째 인덱스의 값을 answer 배열에 추가함으로 문제를 해결하였다.
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+
+    <ul>
+      <li>코드</li>
+    </ul>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="rouge-code"><pre> #include &lt;string&gt;
+ #include &lt;vector&gt;
+ #include &lt;algorithm&gt;
+
+ using namespace std;
+
+ vector&lt;int&gt; solution(vector&lt;int&gt; array, vector&lt;vector&lt;int&gt;&gt; commands) {
+     vector&lt;int&gt; answer;
+     for (int idx = 0; idx &lt; commands.size(); idx++) {
+         int i = commands[idx][0]-1;
+         int j = commands[idx][1]-1;
+         int k = commands[idx][2]-1;
+
+         //i번째부터 j번째 까지 잘라 arr vector에 저장
+         vector&lt;int&gt; arr;
+         for (int temp = i; temp &lt;= j; temp++) {
+             arr.push_back(array[temp]);
+         }
+         //오름차순 정렬
+         sort(arr.begin(), arr.end());
+         //k번째 값을 answer vector에 추가
+         answer.push_back(arr[k]);
+     }
+
+     return answer;
+ }
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+</ul>
+:ET

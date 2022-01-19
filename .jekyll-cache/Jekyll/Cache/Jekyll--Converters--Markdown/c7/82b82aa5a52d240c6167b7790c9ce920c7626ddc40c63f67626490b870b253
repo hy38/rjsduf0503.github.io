@@ -1,0 +1,85 @@
+I"
+<ul>
+  <li>해시 알고리즘 문제 : 프로그래머스 LEVEL 1(완주하지 못한 선수)
+<img src="https://user-images.githubusercontent.com/34560965/104139040-fd7a4200-53eb-11eb-9348-d69fd498744b.png" alt="image" />
+    <ul>
+      <li>사용 언어 : C++</li>
+      <li>해결 날짜 : 2021-01-11</li>
+    </ul>
+
+    <p><strong>- 해결 방법</strong> :</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> --><td class="rouge-code"><pre> 처음에는 효율성을 생각하지 않고 단순하게 이중 for문으로 해결하려고 하였으나 당연하게도 시간 초과 문제가 발생하였다. 
+    
+ 따라서 먼저 두 vector에 정렬을 수행한 다음 인덱스 순서대로 정렬된 값을 비교하였다. 
+    
+ 비교할 때 두 값이 다르다면 그 사람이 완주하지 못한 사람이므로 그 값을 반환한다. 
+    
+ 만약 마지막 사람이 완주하지 못한 사람일 경우(정렬하였을 때 마지막) 비교할 때 걸러지지 않으므로 나누어 반환한다.
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+
+    <ul>
+      <li>코드</li>
+    </ul>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre></td> --><td class="rouge-code"><pre> #include &lt;string&gt;
+ #include &lt;vector&gt;
+ #include &lt;algorithm&gt;
+
+ using namespace std;
+
+ string solution(vector&lt;string&gt; participant, vector&lt;string&gt; completion) {
+     //participant == 마라톤에 참여한 선수들, completion == 완주한 선수들. 반환 값은 완주하지 못한 선수
+     string answer = "";
+
+     //먼저 정렬을 수행
+     sort(participant.begin(), participant.end());
+     sort(completion.begin(), completion.end());
+
+     //정렬된 값을 비교하여 다르면 그 값이 완주하지 못한 사람
+     for (int i = 0; i &lt; completion.size(); i++) {
+         if (participant[i] != completion[i]) {
+             answer = participant[i];
+             break;
+         }
+     }
+
+     if (answer != "") return answer;
+     else return participant[participant.size() - 1]; //마지막 사람이 완주하지 못한 사람일 경우
+ }
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+</ul>
+:ET

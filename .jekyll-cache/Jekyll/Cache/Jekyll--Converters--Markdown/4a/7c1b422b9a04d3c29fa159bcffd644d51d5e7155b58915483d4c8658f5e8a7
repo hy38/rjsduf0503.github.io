@@ -1,0 +1,208 @@
+I"c><ul>
+  <li>3주차 과제 - DML, WHERE</li>
+  <li>실습 환경 : Oracle</li>
+  <li>
+    <p>해결 날짜 : 2021-03-19</p>
+  </li>
+  <li>과제
+    <ul>
+      <li>
+        <p>3-1) [예제1-2]를 변형하여 PLAYER 테이블에 몸무게가 200kg 이상인 4명의 데이터를 INSERT 하는 SQL문을 4개 작성하고 실행 후, 5절의 SELECT 문을 활용하여 4명의 선수 정보 모두를 출력하라.</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">PLAYER</span>
+  <span class="k">VALUES</span><span class="p">(</span><span class="s1">'2017001'</span><span class="p">,</span><span class="s1">'김남호'</span><span class="p">,</span><span class="s1">'K07'</span><span class="p">,</span><span class="s1">'NAMHO, KIM'</span><span class="p">,</span><span class="s1">'Tree'</span><span class="p">,</span><span class="s1">'2017'</span><span class="p">,</span><span class="s1">'MF'</span><span class="p">,</span><span class="s1">'1'</span><span class="p">,</span><span class="s1">'Korea'</span><span class="p">,</span><span class="s1">'98/10/04'</span><span class="p">,</span><span class="s1">'1'</span><span class="p">,</span><span class="s1">'180'</span><span class="p">,</span><span class="s1">'200'</span><span class="p">);</span>
+
+  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">PLAYER</span>
+  <span class="k">VALUES</span><span class="p">(</span><span class="s1">'2017002'</span><span class="p">,</span><span class="s1">'류건열'</span><span class="p">,</span><span class="s1">'K07'</span><span class="p">,</span><span class="s1">'GEONYEOL, RYU'</span><span class="p">,</span><span class="s1">'Towel'</span><span class="p">,</span><span class="s1">'2017'</span><span class="p">,</span><span class="s1">'FW'</span><span class="p">,</span><span class="s1">'2'</span><span class="p">,</span><span class="s1">'Korea'</span><span class="p">,</span><span class="s1">'98/03/12'</span><span class="p">,</span><span class="s1">'1'</span><span class="p">,</span><span class="s1">'170'</span><span class="p">,</span><span class="s1">'250'</span><span class="p">);</span>
+
+  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">PLAYER</span>
+  <span class="k">VALUES</span><span class="p">(</span><span class="s1">'2017003'</span><span class="p">,</span><span class="s1">'박지우'</span><span class="p">,</span><span class="s1">'K07'</span><span class="p">,</span><span class="s1">'JIWOO, PARK'</span><span class="p">,</span><span class="s1">'Jyu'</span><span class="p">,</span><span class="s1">'2017'</span><span class="p">,</span><span class="s1">'DF'</span><span class="p">,</span><span class="s1">'3'</span><span class="p">,</span><span class="s1">'Korea'</span><span class="p">,</span><span class="s1">'98/06/26'</span><span class="p">,</span><span class="s1">'1'</span><span class="p">,</span><span class="s1">'181'</span><span class="p">,</span><span class="s1">'230'</span><span class="p">);</span>
+
+  <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">PLAYER</span>
+  <span class="k">VALUES</span><span class="p">(</span><span class="s1">'2014001'</span><span class="p">,</span><span class="s1">'김정상'</span><span class="p">,</span><span class="s1">'K07'</span><span class="p">,</span><span class="s1">'JEONGSANG, KIM'</span><span class="p">,</span><span class="s1">'Normal'</span><span class="p">,</span><span class="s1">'2019'</span><span class="p">,</span><span class="s1">'FW'</span><span class="p">,</span><span class="s1">'7'</span><span class="p">,</span><span class="s1">'Korea'</span><span class="p">,</span><span class="s1">'96/03/10'</span><span class="p">,</span><span class="s1">'1'</span><span class="p">,</span><span class="s1">'200'</span><span class="p">,</span><span class="s1">'300'</span><span class="p">);</span>
+
+  <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">PLAYER</span> <span class="k">WHERE</span> <span class="n">WEIGHT</span> <span class="o">&gt;=</span> <span class="mi">200</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115105668-56cdb080-9f9b-11eb-921c-7707b32a7d3d.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/115105669-58977400-9f9b-11eb-998d-b49b2d96f7a0.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>3-2) 문제 1에서 생성한 몸무게가 200kg 이상인 열 4개를 가지고, [예제2-1]을 변형하여 4명의 NICKNAME을 “TB”로 UPDATE 하는 SQL문을 작성하고 실행 후, 4명의 결과를 과제 3-1의 SELECT 문으로 출력하라.</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">UPDATE</span> <span class="n">PLAYER</span>
+  <span class="k">SET</span> <span class="n">NICKNAME</span> <span class="o">=</span> <span class="s1">'TB'</span> <span class="k">WHERE</span> <span class="n">WEIGHT</span> <span class="o">&gt;=</span> <span class="mi">200</span><span class="p">;</span>
+
+  <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">PLAYER</span> <span class="k">WHERE</span> <span class="n">WEIGHT</span> <span class="o">&gt;=</span> <span class="mi">200</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115105678-6b11ad80-9f9b-11eb-93f7-99bad87913d0.png" alt="image" /></p>
+      </li>
+      <li>
+        <table>
+          <tbody>
+            <tr>
+              <td>3-3) [예제5-7]과 [예제5-8]을 변형하여 선수의 정보를 조회하는 한글 질의문과 SQL문을 작성하고 실행 후, 그 결과를 출력하라. (단</td>
+              <td> </td>
+              <td>3개 이상, 산술연산자 3개 이상 사용하세요.) [2점]</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <ul>
+          <li>
+            <table>
+              <tbody>
+                <tr>
+                  <td>한글 질의문 : PLAYER TABLE에서 선수의 정보를 불러오되, 몸무게가 200KG 이상인 선수만 출력하여라. (단</td>
+                  <td> </td>
+                  <td>3개 이상, 산술연산자 3개 이상 사용하세요.)</td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">PLAYER_NAME</span> <span class="o">||</span> <span class="s1">' 선수의 키는 '</span> <span class="o">||</span> <span class="n">HEIGHT</span> <span class="o">||</span> <span class="s1">'cm이고, 몸무게는 '</span> <span class="o">||</span> <span class="n">WEIGHT</span> <span class="o">||</span> <span class="s1">'kg이므로 BMI 지수는 '</span> <span class="o">||</span> <span class="n">ROUND</span><span class="p">(</span><span class="n">WEIGHT</span><span class="o">/</span><span class="p">((</span><span class="n">HEIGHT</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">HEIGHT</span><span class="o">/</span><span class="mi">100</span><span class="p">)),</span><span class="mi">2</span><span class="p">)</span> <span class="o">||</span> <span class="s1">'입니다.'</span> <span class="k">FROM</span> <span class="n">PLAYER</span> <span class="k">WHERE</span> <span class="n">WEIGHT</span> <span class="o">&gt;=</span> <span class="mi">200</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115105687-8381c800-9f9b-11eb-8501-af064c2f1447.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>3-4) [예제2-<em>]와 [예제3-</em>]을 참고하여 3개 이상 Column을 IN, LIKE을 이용하여 검색하는  한글 질의문과 SQL문을 작성하고 그 결과를 출력하라.[2점]</p>
+
+        <ul>
+          <li>
+            <p>한글 질의문 : PLAYER TABLE에서 PLAYER_NAME, TEAM_ID, POSITION을 선택해 가져오되, TEAM_ID가 K03이면서 POSITION이 DF이거나, TEAM_ID가 K10이면서 POSITION이 DF인 선수들 중 김씨 성을 가진 선수들을 출력하시오. (단, IN, LIKE을 이용하시오.)</p>
+          </li>
+          <li>
+            <p>SQL문 :</p>
+          </li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">PLAYER_NAME</span><span class="p">,</span> <span class="n">TEAM_ID</span><span class="p">,</span> <span class="k">POSITION</span>
+  <span class="k">FROM</span> <span class="n">PLAYER</span> <span class="k">WHERE</span> <span class="p">(</span><span class="n">TEAM_ID</span><span class="p">,</span> <span class="k">POSITION</span><span class="p">)</span> <span class="k">IN</span><span class="p">((</span><span class="s1">'K03'</span><span class="p">,</span><span class="s1">'DF'</span><span class="p">),(</span><span class="s1">'K10'</span><span class="p">,</span><span class="s1">'DF'</span><span class="p">))</span> <span class="k">AND</span> <span class="n">PLAYER_NAME</span> <span class="k">LIKE</span> <span class="s1">'김%'</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115105699-92687a80-9f9b-11eb-9e61-e64ae3430aff.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>3-5) [예제6]과 [예제7]을 참고하여 AND, NOT, IS NULL을 포함하는 한글 질의문과 SQL문을 작성하고 그 결과를 출력하라.[2점]</p>
+
+        <ul>
+          <li>한글 질의문 : PLAYER TABLE에서 K03 소속이고, 포지션이 DF, 영문 이름이 NULL이 아니고, 몸무게가 70에서 100 사이인 선수들의 정보를 불러와 출력하시오. (단, AND, NOT, IS NULL을 포함하시오.)</li>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">PLAYER_NAME</span> <span class="k">AS</span> <span class="err">이름</span><span class="p">,</span> <span class="n">E_PLAYER_NAME</span> <span class="k">AS</span> <span class="err">영문이름</span> <span class="p">,</span> <span class="n">TEAM_ID</span> <span class="k">AS</span> <span class="err">소속팀</span><span class="p">,</span> <span class="k">POSITION</span> <span class="k">AS</span> <span class="err">포지션</span><span class="p">,</span> <span class="n">WEIGHT</span> <span class="k">AS</span> <span class="err">몸무게</span>
+  <span class="k">FROM</span> <span class="n">PLAYER</span>
+  <span class="k">WHERE</span> <span class="n">TEAM_ID</span> <span class="o">=</span> <span class="s1">'K03'</span>
+  <span class="k">AND</span> <span class="k">POSITION</span> <span class="o">=</span> <span class="s1">'DF'</span>
+  <span class="k">AND</span> <span class="n">E_PLAYER_NAME</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>
+  <span class="k">AND</span> <span class="n">WEIGHT</span> <span class="k">BETWEEN</span> <span class="mi">70</span> <span class="k">AND</span> <span class="mi">100</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115105707-a7450e00-9f9b-11eb-9bd8-1c681bbbf2c5.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>3-6) BACK_NO가 없는 사람들 중에서 성이 김씨인 사람들만 조회하는 SQL문을 작성하고 그 결과를 출력하라.</p>
+
+        <ul>
+          <li>SQL문 :</li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">PLAYER</span>
+  <span class="k">WHERE</span> <span class="n">BACK_NO</span> <span class="k">IS</span> <span class="k">NULL</span> <span class="k">AND</span> <span class="n">PLAYER_NAME</span> <span class="k">LIKE</span> <span class="s1">'김%'</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115105717-af9d4900-9f9b-11eb-91d9-4fca2ae83b1d.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>3-7. [예제5]와 p.121에 있는 IS NULL 과 ROWNUM 을 사용하여 2개의 행을 조회하는 한글 질의문과 SQL문을 작성하고 출력하라.</p>
+
+        <ul>
+          <li>
+            <p>한글 질의문 : PLAYER TABLE에서 최대 두 건의 행을 가져오고 NICKNAME이 NULL인 선수들의 정보를 가져와 출력하시오. (단, IS NULL 과 ROWNUM 을 사용하시오.)</p>
+          </li>
+          <li>
+            <p>SQL문 :</p>
+          </li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">PLAYER_NAME</span> <span class="k">AS</span> <span class="err">이름</span><span class="p">,</span> <span class="k">POSITION</span> <span class="k">AS</span> <span class="err">포지션</span><span class="p">,</span> <span class="n">NICKNAME</span> <span class="k">AS</span> <span class="err">별명</span> 
+  <span class="k">FROM</span> <span class="n">PLAYER</span>
+  <span class="k">WHERE</span> <span class="n">ROWNUM</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="k">AND</span> <span class="n">NICKNAME</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115105742-c80d6380-9f9b-11eb-8be6-41bf23ed5a4a.png" alt="image" /></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

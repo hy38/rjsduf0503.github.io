@@ -1,0 +1,88 @@
+I"�	<ul>
+  <li>해시 알고리즘 문제 : 프로그래머스 LEVEL 2(위장)
+<img src="https://user-images.githubusercontent.com/34560965/106609024-76faef80-65a8-11eb-8c13-f00e767e70e8.png" alt="image" />
+    <ul>
+      <li>사용 언어 : C++</li>
+      <li>해결 날짜 : 2021-02-02</li>
+    </ul>
+
+    <p><strong>- 해결 방법</strong> :</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> --><td class="rouge-code"><pre> 보자마자 map을 사용하면 되겠다는 생각이 들었다.
+
+ map에 이미 존재하는 의상이라면 그 key의 value 값을 증가시켜주고,
+ 존재하지 않는다면 kinds vector에 추가 후 그 key의 값을 1로 초기화하였다.
+    
+ 그 후 맵에 저장된 값들을 돌며 알고리즘에 따라 신규 값들을 추가해 주었다.
+ 알고리즘 : 이전 값 + (새 의상의 개수(1개짜리) + 새 의상의 개수 * 이전 값)
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+
+    <ul>
+      <li>코드</li>
+    </ul>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre></td> --><td class="rouge-code"><pre> #include &lt;string&gt;
+ #include &lt;vector&gt;
+ #include &lt;map&gt;
+
+ using namespace std;
+
+ int solution(vector&lt;vector&lt;string&gt;&gt; clothes) {
+     map&lt;string, int&gt; m; //각 의상 별 개수를 저장하기 위한 map
+     vector&lt;string&gt; kinds; //의상의 종류
+     for (int i = 0; i &lt; clothes.size(); i++) {
+         if (m[clothes[i][1]] &gt; 0) { //의상의 종류가 map에 존재하는 경우
+             m[clothes[i][1]]++;
+         }
+         else { //존재하지 않는 신규
+             kinds.push_back(clothes[i][1]);
+             m[clothes[i][1]] = 1;
+         }
+     }
+     int answer = 0;
+        
+     //알고리즘 : 이전 값 + (새 의상의 개수 + 새 의상의 개수 * 이전 값)
+     //즉, 이전 값 + 한개짜리 + 이전 값과의 조합
+     for (int i = 0; i &lt; kinds.size(); i++) {
+         answer = answer + (m[kinds[i]] + m[kinds[i]]*answer);
+     }
+     return answer;
+ }
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+</ul>
+:ET

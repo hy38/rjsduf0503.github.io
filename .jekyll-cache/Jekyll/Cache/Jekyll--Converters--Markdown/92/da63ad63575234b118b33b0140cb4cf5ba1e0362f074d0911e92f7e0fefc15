@@ -1,0 +1,147 @@
+I"�<ul>
+  <li>3주차 과제 - 소수 찾기</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/34560965/112005277-f4cd8700-8b65-11eb-9bc6-53b3dff0c933.png" alt="image" />
+<img src="https://user-images.githubusercontent.com/34560965/112005280-f5feb400-8b65-11eb-82c4-6a3f48652340.png" alt="image" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+</pre></td> --><td class="rouge-code"><pre>- 사용 언어 : python
+- 해결 날짜 : 2021-03-23
+
+- 느낀점 및 해결 과정 : 
+    
+    - 이번 과제는 문자열로 숫자가 입력되면 한 자리 씩 떼어낸 숫자들로 만들 수 있는 모든 숫자를 알아내고, 그 숫자의 중복된 값을 제거한 다음 다시 정수형으로 이어 붙여 그 값들 중 소수인 숫자의 개수를 찾는 과정을 통해 해결하였다.
+    - 우선 입력 받은 문자열을 list로 만든 num_list를 돌며 permutations 내장 함수를 사용해 가능한 모든 조합을 찾아내어 all_list에 append 한다.
+    그 후 set 함수로 list를 집합으로 바꾸어 중복을 제거하고, 중복된 값이 제거된 리스트의 모든 원소에 리스트의 원소들을 같은 인덱스의 원소들끼리 붙이는 함수인 attach를 적용하여 붙이고 정수형으로 형변환 한다.
+    attach 함수에서, 주어진 ele의 type이 int형 혹은 str형이 아닌 경우 join 함수를 통해 붙여 반환한다.
+    마지막으로 소수의 개수를 찾는 함수인 find_num_of_prime을 리스트에 적용하여 리스트를 돌며 나머지가 0인 값이 2개면 소수라고 판명하였다.
+    - 과제를 해결하며 리스트의 원소 중 같은 인덱스의 원소들끼리 붙이는 방법을 고민하였는데, 저번 시간에 배운 join 함수를 통해 해결할 수 있었다.
+
+
+    
+
+- 코드	
+
+```python
+from itertools import permutations
+
+
+# 리스트의 원소들을 같은 인덱스의 원소들끼리 붙이는 함수
+def attach(ele):
+    if type(ele) in [int, str]:
+        return str(ele)
+    # 주어진 원소의 type이 int 혹은 str 형이 아닌 경우, join 내장 함수로 붙여 반환
+    return "".join(map(str, ele))
+
+
+# 리스트에서 소수인 원소의 개수를 찾는 함수
+def find_num_of_prime(given_list):
+    num_of_prime = 0
+    for number in given_list:
+        temp = 0
+        for idx in list(range(1, number+1)):
+            # 리스트를 돌며 나머지가 0인 값이 2개면 소수
+            if number % idx == 0:
+                temp += 1
+            if temp &gt; 2:
+                break
+        if temp == 2:
+            num_of_prime += 1
+    return num_of_prime
+
+
+# 사용자로부터 입력 받아 리스트로 변환
+num_list = list(input())
+all_list = list()
+
+# 리스트를 돌며 permutations 함수를 사용해 가능한 모든 조합을 찾아냄
+for i in range(len(num_list)):
+    if i &gt; 0:
+        perm = list(permutations(num_list, i + 1))
+    else:
+        perm = num_list
+    for j in perm:
+        all_list.append(j)
+
+# 중복된 값 제거
+all_list_without_duplication = list(set(all_list))
+# 중복된 값이 제거된 리스트의 모든 원소에 attach 함수를 적용하여 붙이고 정수형으로 형변환
+attached_list = list(map(int, map(attach, all_list_without_duplication)))
+# attached_list.sort()
+# print(attached_list)
+
+# 소수의 개수 찾기
+answer = find_num_of_prime(attached_list)
+print(answer)
+```
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET

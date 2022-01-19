@@ -1,0 +1,97 @@
+I"�<ul>
+  <li>
+    <p>5주차 과제 : Random Forest</p>
+
+    <p><img src="https://user-images.githubusercontent.com/34560965/137598032-cd933ebc-ed45-4416-9f84-8a3f554afa90.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/137598033-31ef4460-6d53-428a-b2ea-1bc8145c1dd7.png" alt="image" /></p>
+
+    <ul>
+      <li>사용 언어 : python</li>
+      <li>해결 날짜 : 2021-10-17</li>
+      <li>
+        <p>코드 설명 :</p>
+
+        <ul>
+          <li>pandas의 read_csv 함수로 wdbc.data 파일을 읽어오고, 2열 이후의 값들은 data로, 2열의 값들은 target으로 설정한다.</li>
+          <li>train_test_split 함수로 data와 target을 3:1로 랜덤하게 분리한다.</li>
+          <li>decision tree, Random Forest(5), Random Forest(100)를 각 classifier로 생성 후 cross_val_score 함수를 통해 5-cross validation을 진행한 다음 평균을 프린트하였다.</li>
+          <li>그 결과 트리의 개수가 100개인 Random Forest 방식의 성능이 가장 높았기 때문에 트리의 개수가 100개인 랜덤 포레스트에 데이터를 학습시키고, score 함수로 Test data에 대한 성능을 측정하였다.</li>
+        </ul>
+      </li>
+      <li>
+        <p>결과 : 
+  <img src="https://user-images.githubusercontent.com/34560965/137598041-e9c9fdac-bdca-4d07-8503-e71fd8903d73.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>코드</p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+</pre></td> --><td class="rouge-code"><pre>  <span class="c1">#!/usr/bin/env python
+</span>  <span class="c1"># coding: utf-8
+</span>
+  <span class="c1"># In[63]:
+</span>  <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+  <span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+  <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+  <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+  <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+
+  <span class="n">datas</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'wdbc.data'</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="n">datas</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:]</span>
+  <span class="n">target</span> <span class="o">=</span> <span class="n">datas</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="n">train_input</span><span class="p">,</span> <span class="n">test_input</span><span class="p">,</span> <span class="n">train_target</span><span class="p">,</span> <span class="n">test_target</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+
+  <span class="c1"># decision tree
+</span>  <span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">train_input</span><span class="p">,</span> <span class="n">train_target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">"한 개의 DecisionTree일 때 교차 검증 점수 평균 : "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">score</span><span class="p">.</span><span class="n">mean</span><span class="p">()))</span>
+
+  <span class="c1"># Random Forest (트리 개수 5개)
+</span>  <span class="n">forest_1</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">score_1</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">forest_1</span><span class="p">,</span> <span class="n">train_input</span><span class="p">,</span> <span class="n">train_target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">"트리 개수 5개인 RandomForest일 때 교차 검증 점수 평균 : "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">score_1</span><span class="p">.</span><span class="n">mean</span><span class="p">()))</span>
+
+  <span class="c1"># Random Forest (트리 개수 100개)
+</span>  <span class="n">forest_100</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">score_100</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">forest_100</span><span class="p">,</span> <span class="n">train_input</span><span class="p">,</span> <span class="n">train_target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">"트리 개수 100개인 RandomForest일 때 교차 검증 점수 평균 : "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">score_100</span><span class="p">.</span><span class="n">mean</span><span class="p">()))</span>
+
+  <span class="n">forest_100</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_input</span><span class="p">,</span> <span class="n">train_target</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">"Test Data에 대한 성능 : "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">forest_100</span><span class="p">.</span><span class="n">score</span><span class="p">(</span><span class="n">test_input</span><span class="p">,</span> <span class="n">test_target</span><span class="p">)))</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

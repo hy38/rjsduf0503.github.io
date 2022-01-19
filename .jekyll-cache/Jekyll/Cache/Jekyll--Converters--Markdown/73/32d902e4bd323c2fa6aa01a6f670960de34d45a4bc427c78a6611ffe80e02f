@@ -1,0 +1,148 @@
+I"%<ul>
+  <li>해시 알고리즘 문제 : 프로그래머스 LEVEL 3(베스트 앨범))
+<img src="https://user-images.githubusercontent.com/34560965/108390339-ec76e900-7253-11eb-878c-35876b5fbbb6.png" alt="image" />
+    <ul>
+      <li>사용 언어 : C++</li>
+      <li>해결 날짜 : 2021-02-18</li>
+    </ul>
+
+    <p><strong>- 해결 방법</strong> :</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td> --><td class="rouge-code"><pre> - 처음에 문제를 잘 못 이해하여 가장 많이 재생된 노래 두 개씩을 모아 총 4개만
+ 베스트 앨범에 수록하는 것 인줄 알았다.
+ 그리고 하나의 map에 고유 번호와 재생된 횟수를 담는 법을 고민하는데 시간이 좀 걸렸다.
+
+ - 우선 각 장르별 재생 횟수를 담을 m1(총 합), 각 장르별 고유번호와 
+ 재생 횟수를 담을 m2 map을 선언하여 for문을 돌며 추가해주었다.
+ 그 후 노래가 가장 많이 재생된 장르를 찾아 그 장르 내에서 많이 재생된 노래
+ 최대 2개를 찾아 answer vector에 추가하는 과정을 통해 문제를 해결하였다.
+ 만일 두개의 노래를 찾는 중 노래가 없거나 한 개 밖에 없는 경우라면 break로 
+ 다음 장르로 넘어가도록 하였다.
+ 베스트 앨범에 들어갈 노래를 찾아 고유번호를 추가 후 삭제하고, 마찬가지로
+ 최대 2개씩 노래를 추가한 앨범은 erase 함수로 삭제하였다.
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+
+    <ul>
+      <li>코드</li>
+    </ul>
+
+    <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+</pre></td> --><td class="rouge-code"><pre><span class="cp">#include &lt;string&gt;
+</span> <span class="cp">#include &lt;vector&gt;
+</span> <span class="cp">#include &lt;map&gt;
+</span>
+ <span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+ <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">solution</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">genres</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">plays</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">answer</span><span class="p">;</span>
+     <span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">m1</span><span class="p">;</span> 
+     <span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">m2</span><span class="p">;</span>
+        
+     <span class="c1">//각 장르별 재생 횟수를 담고, 각 장르별 고유번호와 재생횟수를 담음</span>
+     <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">genres</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+         <span class="n">m1</span><span class="p">[</span><span class="n">genres</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">plays</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+         <span class="n">m2</span><span class="p">[</span><span class="n">genres</span><span class="p">[</span><span class="n">i</span><span class="p">]][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">plays</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+     <span class="p">}</span>
+        
+     <span class="c1">//노래가 가장 많이 재생된 장르를 찾아 그 장르 내에서 많이 재생된 노래(최대 2개)를 찾아 answer에 추가</span>
+     <span class="k">while</span><span class="p">(</span><span class="n">m1</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">){</span>
+         <span class="n">string</span> <span class="n">genre</span><span class="p">;</span>
+         <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+         <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="n">temp</span> <span class="o">:</span> <span class="n">m1</span><span class="p">){</span>
+             <span class="c1">//현재 노래가 가장 많이 재생된 장르를 찾음</span>
+             <span class="k">if</span><span class="p">(</span><span class="n">temp</span><span class="p">.</span><span class="n">second</span> <span class="o">&gt;</span> <span class="n">max</span><span class="p">){</span>
+                 <span class="n">max</span> <span class="o">=</span> <span class="n">temp</span><span class="p">.</span><span class="n">second</span><span class="p">;</span> 
+                 <span class="n">genre</span> <span class="o">=</span> <span class="n">temp</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+             <span class="p">}</span>
+         <span class="p">}</span>
+            
+         <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+             <span class="kt">int</span> <span class="n">numOfPlays</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+             <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+             <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="n">temp</span> <span class="o">:</span> <span class="n">m2</span><span class="p">[</span><span class="n">genre</span><span class="p">]){</span>
+                 <span class="c1">//장르 내에서 많이 재생된 노래를 찾음</span>
+                 <span class="k">if</span><span class="p">(</span><span class="n">temp</span><span class="p">.</span><span class="n">second</span> <span class="o">&gt;</span> <span class="n">numOfPlays</span><span class="p">){</span>
+                     <span class="n">numOfPlays</span> <span class="o">=</span> <span class="n">temp</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+                     <span class="n">index</span> <span class="o">=</span> <span class="n">temp</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+                 <span class="p">}</span>
+             <span class="p">}</span>
+             <span class="c1">//두 개의 노래를 찾는 중 노래가 없거나 한 개뿐이라면 break</span>
+             <span class="k">if</span><span class="p">(</span><span class="n">index</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+                
+             <span class="c1">//베스트 앨범에 들어갈 노래의 고유번호를 추가 후 삭제</span>
+             <span class="n">answer</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">index</span><span class="p">);</span>
+             <span class="n">m2</span><span class="p">[</span><span class="n">genre</span><span class="p">].</span><span class="n">erase</span><span class="p">(</span><span class="n">index</span><span class="p">);</span>
+         <span class="p">}</span>
+         <span class="c1">//베스트 앨범에 들어갈 노래를 다 추가한 장르는 삭제</span>
+         <span class="n">m1</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">genre</span><span class="p">);</span>
+     <span class="p">}</span>
+        
+     <span class="k">return</span> <span class="n">answer</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+</ul>
+:ET

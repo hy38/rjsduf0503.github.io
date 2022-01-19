@@ -1,0 +1,147 @@
+I"�4<ul>
+  <li>
+    <p>9주차 과제 : Text data 처리 2</p>
+
+    <p><img src="https://user-images.githubusercontent.com/34560965/142651979-c6c532d1-536f-4199-b596-7aac58574f35.png" alt="image" /></p>
+
+    <ul>
+      <li>사용 언어 : python</li>
+      <li>해결 날짜 : 2021-11-20</li>
+      <li>
+        <p>코드 설명 :</p>
+
+        <ul>
+          <li>bbcsport 데이터를 다운 받아 불러온 후 데이터 인코딩 방식 변경 및 전처리 과정을 진행한다.</li>
+          <li>그 후 Tfidvectorizer를 이용해 불용어 처리와 tf-idf, L2-normalization을 적용하고 5-cross-validation을 이용해 분류 정확도를 측정한다. 이 때 분류 정확도의 평균은 0.9755837470123184로 측정되었다.</li>
+          <li>다음으로 PCA 사용을 위해 x값을 todense()함수로 행렬로 변환 시켜 주고, 각 2차원과 10차원으로 감소시킨다. 이 때 마찬가지로 5-cross-validation을 이용해 분류 정확도를 측정한다. 2차원으로 감소시킬 때의 분류 정확도의 평균은 0.8656554513697371로 가장 낮았고, 10차원으로 감소시킬 때의 분류 정확도의 평균은 0.9701415701415701로 차원 감소 전 분류 정확도와 유사했다.</li>
+        </ul>
+      </li>
+      <li>
+        <p>결과 : 
+  <img src="https://user-images.githubusercontent.com/34560965/142652023-9bdbf39e-8461-41a1-a288-8c94942588cf.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/142652041-02eb54f5-81d6-424c-87fb-34cf7507f55c.png" alt="image" />
+  <img src="https://user-images.githubusercontent.com/34560965/142652056-ab2d7c21-7108-4683-a361-5381389dd39c.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>코드</p>
+
+        <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+</pre></td> --><td class="rouge-code"><pre>  <span class="kn">import</span> <span class="nn">chardet</span>
+  <span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_files</span>
+
+  <span class="n">files</span> <span class="o">=</span> <span class="n">load_files</span><span class="p">(</span><span class="s">'./bbcsport/'</span><span class="p">)</span>
+  <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">files</span><span class="p">.</span><span class="n">data</span><span class="p">,</span> <span class="n">files</span><span class="p">.</span><span class="n">target</span>
+
+  <span class="c1">#데이터 인코딩 방식 변경
+</span>  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">chardet</span><span class="p">.</span><span class="n">detect</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">!=</span><span class="s">'utf-8'</span><span class="p">):</span>
+          <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">decode</span><span class="p">(</span><span class="n">chardet</span><span class="p">.</span><span class="n">detect</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])[</span><span class="s">'encoding'</span><span class="p">]).</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf8'</span><span class="p">)</span>
+                
+  <span class="c1">#데이터 전처리
+</span>  <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">doc</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">b</span><span class="s">''</span><span class="p">,</span><span class="sa">b</span><span class="s">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">doc</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">b</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">,</span><span class="sa">b</span><span class="s">' '</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+
+  <span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+  <span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+  <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">KFold</span><span class="p">,</span> <span class="n">cross_val_score</span>
+
+  <span class="c1">#기존 데이터
+</span>  <span class="n">knn</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">kfold</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+  <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">stop_words</span> <span class="o">=</span> <span class="s">'english'</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s">'l2'</span><span class="p">)</span>
+  <span class="n">x_transformed</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="n">score</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">knn</span><span class="p">,</span> <span class="n">x_transformed</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">kfold</span><span class="p">)</span>
+  <span class="n">score_mean</span> <span class="o">=</span> <span class="n">score</span><span class="p">.</span><span class="n">mean</span><span class="p">()</span>
+
+  <span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+  <span class="c1">#PCA 사용을 위해 행렬로 변환
+</span>  <span class="n">x_dense</span> <span class="o">=</span> <span class="n">x_transformed</span><span class="p">.</span><span class="n">todense</span><span class="p">()</span>
+
+  <span class="c1">#2차원으로 감소
+</span>  <span class="n">pca_2</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+  <span class="n">pca_2</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_dense</span><span class="p">)</span>
+  <span class="n">x_pca_2</span> <span class="o">=</span> <span class="n">pca_2</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x_dense</span><span class="p">)</span>
+  <span class="n">score_2</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">knn</span><span class="p">,</span> <span class="n">x_pca_2</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">kfold</span><span class="p">)</span>
+  <span class="n">score_2_mean</span> <span class="o">=</span> <span class="n">score_2</span><span class="p">.</span><span class="n">mean</span><span class="p">()</span>
+
+  <span class="c1">#10차원으로 감소
+</span>  <span class="n">pca_10</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+  <span class="n">pca_10</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_dense</span><span class="p">)</span>
+  <span class="n">x_pca_10</span> <span class="o">=</span> <span class="n">pca_10</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x_dense</span><span class="p">)</span>
+  <span class="n">score_10</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">knn</span><span class="p">,</span> <span class="n">x_pca_10</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">kfold</span><span class="p">)</span>
+  <span class="n">score_10_mean</span> <span class="o">=</span> <span class="n">score_10</span><span class="p">.</span><span class="n">mean</span><span class="p">()</span>
+
+  <span class="k">print</span><span class="p">(</span><span class="s">"기존 데이터 크기 : {size}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">x_transformed</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">"데이터 차원 2로 감소시킨 데이터 크기 : {size}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">x_pca_2</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">"데이터 차원 10으로 감소시킨 데이터 크기 : {size}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">x_pca_10</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+
+  <span class="k">print</span><span class="p">(</span><span class="s">"기존 데이터 분류 정확도 : {score}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">))</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">"변환되는 데이터 차원이 2일 때 분류 정확도 : {score}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">score</span><span class="o">=</span><span class="n">score_2</span><span class="p">))</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">"변환되는 데이터 차원이 10일 때 분류 정확도 : {score}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">score</span><span class="o">=</span><span class="n">score_10</span><span class="p">))</span>
+
+  <span class="k">print</span><span class="p">(</span><span class="s">"기존 데이터 분류 정확도의 평균 : {score}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">score</span><span class="o">=</span><span class="n">score_mean</span><span class="p">))</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">"변환되는 데이터 차원이 2일 때 분류 정확도의 평균 : {score}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">score</span><span class="o">=</span><span class="n">score_2_mean</span><span class="p">))</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">"변환되는 데이터 차원이 10일 때 분류 정확도의 평균 : {score}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">score</span><span class="o">=</span><span class="n">score_10_mean</span><span class="p">))</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

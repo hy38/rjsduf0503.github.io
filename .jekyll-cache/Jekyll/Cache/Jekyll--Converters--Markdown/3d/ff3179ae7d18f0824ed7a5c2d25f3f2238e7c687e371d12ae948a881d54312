@@ -1,0 +1,151 @@
+I"�!<ul>
+  <li>2021/04/04 리액트 스터디
+<img src="https://user-images.githubusercontent.com/34560965/113511192-91961880-9599-11eb-8f26-1e0d3fd340ca.png" alt="image" />
+    <ul>
+      <li>사용 언어 : JAVASCRIPT</li>
+    </ul>
+
+    <p><strong>- 해결 방법</strong> :</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre> - mergeObject : 처음에 object를 합칠 때 assign 함수를 사용하였는데, { ...objA, ...objB }의 형태로
+ props의 값들을 다 받아와 새 object를 생성하는 형태로 간단하게 표현이 가능했다.
+ - removePassword : 처음에 password라는 prop를 제거할 때 delete라는 함수를 사용했는데,
+ 앞의 merge헀던 object에도 영향을 끼치게 되었다. 그래서 새 오브젝트를 만들어 반환하되,
+ 인자로 받은 user object의 props에서 password를 제외한 나머지 props를 가져와 props를 다 
+ 풀지 않고 object의 값을 가져왔다.
+ - getOnlyValues/getOnlyKeys : 각각 values와 keys라는 함수로 각 object의 value만, key값 만을
+ 뽑아내었다.
+ - freezObj : freeze 함수로 object에 대한 변경권한을 삭제한다.
+ - 또한 static getOnluValues = (user) =&gt; Object.values(user);의 형태는 return문을 쓰지 않아도
+ return됨을 배웠다.
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+
+    <ul>
+      <li>코드</li>
+    </ul>
+
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+</pre></td><td class="rouge-code"><pre> <span class="kd">class</span> <span class="nx">ObjectFunctions</span> <span class="p">{</span>
+ <span class="kd">static</span> <span class="nx">mergeObjects</span><span class="p">(</span><span class="nx">objA</span><span class="p">,</span> <span class="nx">objB</span><span class="p">)</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="p">{</span> <span class="p">...</span><span class="nx">objA</span><span class="p">,</span> <span class="p">...</span><span class="nx">objB</span> <span class="p">};</span>
+ <span class="p">}</span>
+ <span class="kd">static</span> <span class="nx">removePassword</span><span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+     <span class="c1">//props를 다 풀지 않고 object의 값을 다 가져옴</span>
+     <span class="kd">const</span> <span class="p">{</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">favFood</span><span class="p">,</span> <span class="nx">job</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">user</span><span class="p">;</span>
+     <span class="k">return</span> <span class="p">{</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">favFood</span><span class="p">,</span> <span class="nx">job</span> <span class="p">};</span>
+ <span class="p">}</span>
+ <span class="kd">static</span> <span class="nx">getOnlyValues</span><span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">values</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
+ <span class="p">}</span>
+ <span class="c1">//위와 동일한 함수, return문을 꼭 쓰지 않아도 return됨.</span>
+ <span class="c1">//static getOnluValues = (user) =&gt; Object.values(user);</span>
+
+ <span class="kd">static</span> <span class="nx">getOnlyProperties</span><span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
+ <span class="p">}</span>
+ <span class="kd">static</span> <span class="nx">freezeObj</span><span class="p">(</span><span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nb">Object</span><span class="p">.</span><span class="nx">freeze</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
+     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
+     <span class="k">return</span> <span class="nx">user</span><span class="p">;</span>
+ <span class="p">}</span>
+ <span class="p">}</span>
+
+ <span class="cm">/* 이 밑으로는 아무것도 작성하면 안됩니다. */</span>
+
+ <span class="kd">const</span> <span class="nx">objA</span> <span class="o">=</span> <span class="p">{</span>
+ <span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Kyeongdoo</span><span class="dl">"</span><span class="p">,</span>
+ <span class="na">favFood</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Soju</span><span class="dl">"</span>
+ <span class="p">};</span>
+
+ <span class="kd">const</span> <span class="nx">objB</span> <span class="o">=</span> <span class="p">{</span>
+ <span class="na">password</span><span class="p">:</span> <span class="dl">"</span><span class="s2">12345</span><span class="dl">"</span><span class="p">,</span>
+ <span class="na">job</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Student</span><span class="dl">"</span>
+ <span class="p">};</span>
+
+ <span class="kd">const</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">ObjectFunctions</span><span class="p">.</span><span class="nx">mergeObjects</span><span class="p">(</span><span class="nx">objA</span><span class="p">,</span> <span class="nx">objB</span><span class="p">);</span>
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
+
+ <span class="kd">const</span> <span class="nx">rmPwUser</span> <span class="o">=</span> <span class="nx">ObjectFunctions</span><span class="p">.</span><span class="nx">removePassword</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">rmPwUser</span><span class="p">);</span>
+
+ <span class="kd">const</span> <span class="nx">onlyValues</span> <span class="o">=</span> <span class="nx">ObjectFunctions</span><span class="p">.</span><span class="nx">getOnlyValues</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">onlyValues</span><span class="p">);</span>
+
+ <span class="kd">const</span> <span class="nx">onlyProperties</span> <span class="o">=</span> <span class="nx">ObjectFunctions</span><span class="p">.</span><span class="nx">getOnlyProperties</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">onlyProperties</span><span class="p">);</span>
+
+ <span class="kd">const</span> <span class="nx">frozenUser</span> <span class="o">=</span> <span class="nx">ObjectFunctions</span><span class="p">.</span><span class="nx">freezeObj</span><span class="p">(</span><span class="nx">user</span><span class="p">);</span>
+
+ <span class="nx">frozenUser</span><span class="p">.</span><span class="nx">favFood</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">beer</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// 여기서 에러가 발생해야 합니다.</span>
+
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">frozenUser</span><span class="p">);</span> <span class="c1">//변경되지 않은 모습을 볼 수 있음</span>
+
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+</ul>
+:ET

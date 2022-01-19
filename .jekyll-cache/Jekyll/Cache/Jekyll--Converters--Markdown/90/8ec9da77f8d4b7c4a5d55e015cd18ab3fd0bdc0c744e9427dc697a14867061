@@ -1,0 +1,204 @@
+I"�6<ul>
+  <li>7주차 과제 - 집합 연산자, 계층</li>
+  <li>실습 환경 : Oracle</li>
+  <li>
+    <p>해결 날짜 : 2021-04-17</p>
+  </li>
+  <li>과제
+    <ul>
+      <li>
+        <p>7-1) [예제1]을 참고하여 EMP 테이블에서 UNION 연산을 실행하는 한글 질의문과 SQL문을 작성하라. [1점]</p>
+
+        <ul>
+          <li>
+            <p>한글 질의문 :사원 중 JOB이 CLERK인 사원들의 집합과 사원 중 JOB이 SALESMAN인 사원들의 집합의 합집합을 구하여라.</p>
+          </li>
+          <li>
+            <p>SQL문 :</p>
+          </li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="o">*</span>
+  <span class="k">FROM</span> <span class="n">EMP</span>
+  <span class="k">WHERE</span> <span class="n">JOB</span> <span class="o">=</span> <span class="s1">'CLERK'</span>
+  <span class="k">UNION</span> 
+  <span class="k">SELECT</span> <span class="o">*</span>
+  <span class="k">FROM</span> <span class="n">EMP</span>
+  <span class="k">WHERE</span> <span class="n">JOB</span> <span class="o">=</span> <span class="s1">'SALESMAN'</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115107103-c3e54400-9fa3-11eb-80a2-b0e152362c38.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>7-2) [예제5]를 참고하여 EMP 테이블에서 MINUS 연산을 실행하는 한글 질의문과 SQL문을 작성하라. [1점]</p>
+
+        <ul>
+          <li>
+            <p>한글 질의문 : 사원 중 JOB이 SALESMAN인 사원들의 집합에서 사원 중 월급이 1300 미만이 아닌 사원들의 집합을 구하여라.</p>
+          </li>
+          <li>
+            <p>SQL문 :</p>
+          </li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="o">*</span>
+  <span class="k">FROM</span> <span class="n">EMP</span>
+  <span class="k">WHERE</span> <span class="n">JOB</span> <span class="o">=</span> <span class="s1">'SALESMAN'</span>
+  <span class="n">MINUS</span>
+  <span class="k">SELECT</span> <span class="o">*</span>
+  <span class="k">FROM</span> <span class="n">EMP</span>
+  <span class="k">WHERE</span> <span class="n">SAL</span> <span class="o">&lt;</span> <span class="mi">1300</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115107113-d790aa80-9fa3-11eb-8220-8d79eb27917f.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>7-3) [예제1]을 참고하여 순방향 전개를 나타내는 계층형 SQL문을 한글 질의문과 함께 작성하라. (EMP 테이블을 사용할 경우 JOB을 출력하도록 함) [2점]</p>
+
+        <ul>
+          <li>
+            <p>한글 질의문 : EMP 테이블에서 상위 사원과 하위 사원의 관계를 순방향 전개하여 표시하되, 월급이 1000 이상인 사원만 출력하여라.</p>
+          </li>
+          <li>
+            <p>SQL문 :</p>
+          </li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">JOB</span><span class="p">,</span> <span class="k">LEVEL</span><span class="p">,</span> <span class="n">LPAD</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="k">LEVEL</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">||</span> <span class="n">EMPNO</span> <span class="err">사원</span><span class="p">,</span> <span class="n">MGR</span> <span class="err">관리자</span><span class="p">,</span> <span class="n">SAL</span> <span class="err">월급</span><span class="p">,</span>
+      <span class="n">CONNECT_BY_ISLEAF</span> <span class="n">ISLEAF</span>
+  <span class="k">FROM</span> <span class="n">EMP</span>
+  <span class="k">WHERE</span> <span class="n">SAL</span> <span class="o">&gt;=</span> <span class="mi">1000</span>
+  <span class="k">START</span> <span class="k">WITH</span> <span class="n">MGR</span> <span class="k">IS</span> <span class="k">NULL</span>
+  <span class="k">CONNECT</span> <span class="k">BY</span> <span class="k">PRIOR</span> <span class="n">EMPNO</span> <span class="o">=</span> <span class="n">MGR</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115107135-ebd4a780-9fa3-11eb-8a67-50e7f65d94fd.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>7-4) [예제3]을 참고하여 역방향 전개를 나타내는 계층형 SQL문을 한글 질의문과 함께 작성하라. (EMP 테이블을 사용할 경우 JOB을 출력하도록 함) [2점]</p>
+
+        <ul>
+          <li>
+            <p>한글 질의문 : EMP 테이블에서 상위 사원과 하위 사원의 관계를 역방향 전개하여 표시하되, 월급이 1200 초과인 사원만 출력하여라.</p>
+          </li>
+          <li>
+            <p>SQL문 :</p>
+          </li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">JOB</span><span class="p">,</span> <span class="k">LEVEL</span><span class="p">,</span> <span class="n">LPAD</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span> <span class="mi">4</span><span class="o">*</span><span class="p">(</span><span class="k">LEVEL</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">||</span> <span class="n">EMPNO</span> <span class="err">사원</span><span class="p">,</span> <span class="n">MGR</span> <span class="err">관리자</span><span class="p">,</span>
+      <span class="n">CONNECT_BY_ISLEAF</span> <span class="n">ISLEAF</span>
+  <span class="k">FROM</span> <span class="n">EMP</span>
+  <span class="k">WHERE</span> <span class="n">SAL</span> <span class="o">&gt;</span> <span class="mi">1200</span>
+  <span class="k">START</span> <span class="k">WITH</span> <span class="n">JOB</span> <span class="o">=</span> <span class="s1">'CLERK'</span>
+  <span class="k">CONNECT</span> <span class="k">BY</span> <span class="k">PRIOR</span> <span class="n">MGR</span> <span class="o">=</span> <span class="n">EMPNO</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115107150-03139500-9fa4-11eb-8d75-b9f807fc01fc.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>7-5) [예제5]를 참고하여 셀프 조인을 수행하는 SQL문을 한글 질의문과 함께 작성하라. [2점]</p>
+
+        <ul>
+          <li>
+            <p>한글 질의문 : EMP 테이블에서 셀프 조인을 통해 연봉이 15000 이상인 사원의 직속 관리자와 차상위 관리자를 구하여 출력하여라.</p>
+          </li>
+          <li>
+            <p>SQL문 :</p>
+          </li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">E1</span><span class="p">.</span><span class="n">ENAME</span> <span class="err">사원명</span><span class="p">,</span> <span class="n">E1</span><span class="p">.</span><span class="n">JOB</span> <span class="err">직책</span><span class="p">,</span> <span class="n">E1</span><span class="p">.</span><span class="n">EMPNO</span> <span class="nv">"사원 번호"</span><span class="p">,</span> <span class="p">(</span><span class="n">E1</span><span class="p">.</span><span class="n">SAL</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span> <span class="o">+</span> <span class="n">NVL</span><span class="p">(</span><span class="n">E1</span><span class="p">.</span><span class="n">COMM</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="err">연봉</span><span class="p">,</span>
+          <span class="n">E1</span><span class="p">.</span><span class="n">MGR</span> <span class="nv">"직속 관리자 번호"</span><span class="p">,</span> <span class="n">E2</span><span class="p">.</span><span class="n">MGR</span> <span class="nv">"차상위 관리자 번호"</span>
+  <span class="k">FROM</span> <span class="n">EMP</span> <span class="n">E1</span><span class="p">,</span> <span class="n">EMP</span> <span class="n">E2</span>
+  <span class="k">WHERE</span> <span class="n">E1</span><span class="p">.</span><span class="n">MGR</span> <span class="o">=</span> <span class="n">E2</span><span class="p">.</span><span class="n">EMPNO</span>
+      <span class="k">AND</span> <span class="p">(</span><span class="n">E1</span><span class="p">.</span><span class="n">SAL</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span> <span class="o">+</span> <span class="n">NVL</span><span class="p">(</span><span class="n">E1</span><span class="p">.</span><span class="n">COMM</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">15000</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115107164-1e7ea000-9fa4-11eb-8944-3610dc00cbab.png" alt="image" /></p>
+      </li>
+      <li>
+        <p>7-6) [예제6]를 참고하여 [과제7-5]에서 만든 질의문을 최상위 레벨도 출력되도록 변경하라. [2점]</p>
+
+        <ul>
+          <li>
+            <p>한글 질의문 : EMP 테이블에서 셀프 조인을 통해 연봉이 15000 이상인 사원의 직속 관리자와 차상위 관리자를 구하되, 직속 관리자가 없는 최상위 관리자도 나오게 출력하여라.</p>
+          </li>
+          <li>
+            <p>SQL문 :</p>
+          </li>
+        </ul>
+
+        <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td> --><td class="rouge-code"><pre>  <span class="k">SELECT</span> <span class="n">E1</span><span class="p">.</span><span class="n">ENAME</span> <span class="err">사원명</span><span class="p">,</span> <span class="n">E1</span><span class="p">.</span><span class="n">JOB</span> <span class="err">직책</span><span class="p">,</span> <span class="n">E1</span><span class="p">.</span><span class="n">EMPNO</span> <span class="nv">"사원 번호"</span><span class="p">,</span> <span class="p">(</span><span class="n">E1</span><span class="p">.</span><span class="n">SAL</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span> <span class="o">+</span> <span class="n">NVL</span><span class="p">(</span><span class="n">E1</span><span class="p">.</span><span class="n">COMM</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="err">연봉</span><span class="p">,</span>
+          <span class="n">E1</span><span class="p">.</span><span class="n">MGR</span> <span class="nv">"직속 관리자 번호"</span><span class="p">,</span> <span class="n">E2</span><span class="p">.</span><span class="n">MGR</span> <span class="nv">"차상위 관리자 번호"</span>
+  <span class="k">FROM</span> <span class="n">EMP</span> <span class="n">E1</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="n">EMP</span> <span class="n">E2</span>
+  <span class="k">ON</span> <span class="p">(</span><span class="n">E1</span><span class="p">.</span><span class="n">MGR</span> <span class="o">=</span> <span class="n">E2</span><span class="p">.</span><span class="n">EMPNO</span><span class="p">)</span>
+  <span class="k">WHERE</span> <span class="p">(</span><span class="n">E1</span><span class="p">.</span><span class="n">SAL</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span> <span class="o">+</span> <span class="n">NVL</span><span class="p">(</span><span class="n">E1</span><span class="p">.</span><span class="n">COMM</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">15000</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div>        </div>
+
+        <ul>
+          <li>실행 결과 :</li>
+        </ul>
+
+        <p><img src="https://user-images.githubusercontent.com/34560965/115107182-40782280-9fa4-11eb-9a18-1f76a570b35f.png" alt="image" /></p>
+      </li>
+    </ul>
+  </li>
+</ul>
+:ET

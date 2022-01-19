@@ -1,0 +1,19 @@
+I"@<ul>
+  <li>오늘의 계획
+    <ul>
+      <li>Inflean을 통한 react 공부하기
+        <ul>
+          <li>수업 소개</li>
+          <li>공부 전략</li>
+          <li>개발환경의 종류</li>
+          <li>npm을 이용해서 create react app 설치</li>
+          <li>create react app을 이용해서 개발환경구축</li>
+          <li>샘플 웹앱 실행</li>
+          <li>JS 코딩하는 법</li>
+        </ul>
+      </li>
+      <li>프로그래머스/백준 사이트에서 알고리즘 문제 풀이(그리디 알고리즘)</li>
+    </ul>
+  </li>
+</ul>
+:ET
