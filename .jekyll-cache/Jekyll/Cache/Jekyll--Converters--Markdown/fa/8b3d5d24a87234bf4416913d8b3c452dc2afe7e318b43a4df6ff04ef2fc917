@@ -1,0 +1,40 @@
+I"�<h1 id="1st-post">1st post</h1>
+
+<h3 id="topic">Topic</h3>
+
+<ul>
+  <li>First, our project’s topic is <b>“Finding optimal routes &amp; fire emergency evacuation routes inside the building by using beacon”</b>.</li>
+</ul>
+
+<h3 id="current-role">Current role</h3>
+
+<ul>
+  <li>I(Geonyeol Ryu) am in charge of <b>creating App</b>.</li>
+  <li>Namho Kim is in charge of <b>bluetooth connection and server</b>.</li>
+  <li>Minsu Sun is in charge of <b>image scanning</b>.</li>
+  <li>Junseong Moon and Migyeong Kim are in charge of <b>IEEE &amp; arduino</b>.</li>
+</ul>
+
+<h3 id="big-goals-we-should-achieve">Big goals we should achieve</h3>
+
+<ol>
+  <li>Provide users with the fastest escape route in the event of a fire.</li>
+  <li>Act as indoor navigation in peacetime.</li>
+</ol>
+
+<h3 id="how-to">How to?</h3>
+
+<ul>
+  <li>When the manager uploads a blueprint for each floor, the app converts it to a map, and the administrator enters the name of each room.</li>
+  <li>Using a Bluetooth beacon, the user’s location data is obtained.</li>
+  <li>In peacetime, the app shows an optimized route to the destination that the user wants.</li>
+  <li>In the event of a fire, a fire alarm that is linked to the server notifies the server of the occurrence of the fire, and the server notifies the user of the fire through the app.</li>
+  <li>And the app displays the current population cluster and the fastest escape route from the current user location on the map.</li>
+</ul>
+
+<h3 id="app-view">App view</h3>
+
+<p><img src="https://user-images.githubusercontent.com/34560965/149961426-92775496-031d-4a4e-b400-0d090acdc817.png" width="200" height="400" /> 
+<img src="https://user-images.githubusercontent.com/34560965/149961464-35bd3a15-e17a-4298-8597-17798b23d887.png" width="200" height="400" />
+<img src="https://user-images.githubusercontent.com/34560965/149961496-e9198ff1-bcf6-40dc-adea-1ba81f3dbe52.png" width="200" height="400" /></p>
+:ET
