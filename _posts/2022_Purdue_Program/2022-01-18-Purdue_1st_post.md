@@ -1,7 +1,7 @@
 ---
-######layout: post
+layout: post
 author: 류건열
-#title: Purdue_Program
+title: Purdue_Program
 ---
 
 # 1st post
