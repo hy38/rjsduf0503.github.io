@@ -13,7 +13,7 @@ baseurl: ''
 lang: en
 
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
-timezone: Asia/Shanghai
+timezone: Asia/Seoul
 
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
@@ -27,13 +27,13 @@ description: >-                        # used by seo meta and the atom feed
   bootstrap Jekyll theme with responsive web design
   and focuses on text presentation.
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
-url: 'https://rjsduf0503.github.io/Ryu_Blog/'
+url: 'https://rjsduf0503.github.io'
 
 github:
   username: rjsduf0503             # change to your github username
 
-twitter:
-  username: twitter_username            # change to your twitter username
+# twitter:
+#   username: twitter_username            # change to your twitter username
 
 social:
   # Change to your full name.
@@ -43,7 +43,7 @@ social:
   links:
     # The first element serves as the copyright owner's link
     - https://twitter.com/username      # change to your twitter homepage
-    - https://github.com/username       # change to your github homepage
+#     - https://github.com/username       # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
@@ -71,7 +71,7 @@ google_analytics:
 #     light  - Use the light color scheme
 #     dark   - Use the dark color scheme
 #
-theme_mode:   # [light|dark]
+theme_mode: 'dark'  # [light|dark]
 
 # The CDN endpoint for images.
 # Notice that once it is assigned, the CDN url
@@ -81,7 +81,7 @@ theme_mode:   # [light|dark]
 img_cdn: 'https://cdn.jsdelivr.net/gh/cotes2020/chirpy-images@f4e0354b674f65a53b8917f0f786ed2956898cc1'
 
 # the avatar on sidebar, support local or CORS resources
-avatar: '/commons/avatar.jpg'
+avatar: '/rjsduf0503/avatar.jpg'
 
 # boolean type, the global switch for ToC in posts.
 toc: true
